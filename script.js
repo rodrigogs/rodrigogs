@@ -283,43 +283,6 @@ function activateEasterEgg() {
     }, 3000);
 }
 
-// Add typing effect to terminal
-const terminalBody = document.querySelector('.terminal-body');
-if (terminalBody) {
-    const lines = [
-        '<p><span class="prompt">$</span> cat about.txt</p>',
-        '<p class="output">Passionate full-stack developer with 10+ years of experience</p>',
-        '<p class="output">Building scalable web applications and open-source tools</p>',
-        '<p class="output">Love solving complex problems with elegant code</p>',
-        '<p><span class="prompt">$</span> echo $CURRENT_PROJECT</p>',
-        '<p class="output">WhatsApp Backup Reader - Desktop/web app for chat visualization</p>',
-        '<p><span class="prompt">$</span> cat interests.txt</p>',
-        '<p class="output">• Svelte, TypeScript, AI integrations</p>',
-        '<p class="output">• Node.js, Vue.js, Express, MongoDB</p>',
-        '<p class="output">• Cats 🐱 | Coffee ☕ | Open Source 💜</p>',
-        '<p><span class="prompt cursor">█</span></p>'
-    ];
-    
-    terminalBody.innerHTML = '';
-    
-    let lineIndex = 0;
-    const speed = 300;
-    
-    function typeWriter() {
-        if (lineIndex < lines.length) {
-            terminalBody.innerHTML += lines[lineIndex];
-            lineIndex++;
-            setTimeout(typeWriter, speed);
-        }
-    }
-    
-    // Start typing effect when About tab is visible
-    const aboutTab = document.getElementById('about');
-    if (aboutTab && aboutTab.classList.contains('active')) {
-        setTimeout(typeWriter, 500);
-    }
-}
-
 // Track tab changes to trigger animations
 const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
