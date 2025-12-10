@@ -235,16 +235,21 @@ document.addEventListener('keydown', (e) => {
 
 function activateEasterEgg() {
     const body = document.body;
-    body.style.animation = 'rainbow 2s linear infinite';
     
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes rainbow {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
-    `;
-    document.head.appendChild(style);
+    // Check if style already exists
+    if (!document.getElementById('rainbow-animation')) {
+        const style = document.createElement('style');
+        style.id = 'rainbow-animation';
+        style.textContent = `
+            @keyframes rainbow {
+                0% { filter: hue-rotate(0deg); }
+                100% { filter: hue-rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    body.style.animation = 'rainbow 2s linear infinite';
     
     setTimeout(() => {
         body.style.animation = '';
@@ -252,21 +257,22 @@ function activateEasterEgg() {
     
     // Show secret message
     const message = document.createElement('div');
-    message.textContent = '🎮 KONAMI CODE ACTIVATED! 🎮';
+    const messageText = document.createTextNode('🎮 KONAMI CODE ACTIVATED! 🎮');
+    message.appendChild(messageText);
     message.style.cssText = `
         position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         background: rgba(255, 110, 199, 0.95);
-        color: var(--darker-bg);
+        color: #010409;
         padding: 2rem 4rem;
         font-size: 2rem;
         font-weight: 900;
         border-radius: 8px;
         z-index: 9999;
         animation: fadeIn 0.5s ease;
-        box-shadow: 0 0 40px var(--neon-pink);
+        box-shadow: 0 0 40px #ff6ec7;
     `;
     document.body.appendChild(message);
     
