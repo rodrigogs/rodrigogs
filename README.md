@@ -7,6 +7,12 @@
   <img src="https://img.shields.io/github/followers/rodrigogs?label=Followers&style=social" alt="GitHub Badge">
 </p>
 
+<p align="center">
+  <a href="https://rodrigogs.github.io/rodrigogs/">
+    <img src="https://img.shields.io/badge/🌐_Visit_My_Portfolio-FF6EC7?style=for-the-badge&logoColor=white" alt="Portfolio">
+  </a>
+</p>
+
 ---
 
 ### 👨‍💻 About Me
