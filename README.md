@@ -11,7 +11,7 @@
 
 ### 👨‍💻 About Me
 
-I'm a passionate **full-stack developer** with over a decade of experience building scalable web applications and open-source tools. I love solving complex problems with elegant code and sharing my work with the community.
+I'm a passionate **full-stack developer** with over **15 years of experience** building scalable web applications and open-source tools. I love solving complex problems with elegant code and sharing my work with the community.
 
 - 🌱 Exploring **Svelte, TypeScript, and AI integrations**
 - 💬 Ask me about **Node.js, Vue.js, Express, MongoDB, and API development**
