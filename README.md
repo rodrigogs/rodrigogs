@@ -103,6 +103,10 @@ I'm a passionate **full-stack developer** with over **15 years of experience** b
 ![Fastify](https://img.shields.io/badge/-Fastify-000000?style=flat&logo=fastify&logoColor=white)
 ![Spring](https://img.shields.io/badge/-Spring-6DB33F?style=flat&logo=spring&logoColor=white)
 ![.NET](https://img.shields.io/badge/-.NET-512BD4?style=flat&logo=dotnet&logoColor=white)
+![Struts](https://img.shields.io/badge/-Struts-B31B1B?style=flat&logo=apache&logoColor=white)
+![Grails](https://img.shields.io/badge/-Grails-63B132?style=flat&logo=apache-groovy&logoColor=white)
+![Koin](https://img.shields.io/badge/-Koin-FF9800?style=flat&logo=kotlin&logoColor=white)
+![Ktor](https://img.shields.io/badge/-Ktor-087CFA?style=flat&logo=kotlin&logoColor=white)
 
 #### **Databases**
 ![MongoDB](https://img.shields.io/badge/-MongoDB-47A248?style=flat&logo=mongodb&logoColor=white)
@@ -113,6 +117,7 @@ I'm a passionate **full-stack developer** with over **15 years of experience** b
 ![SQLite](https://img.shields.io/badge/-SQLite-003B57?style=flat&logo=sqlite&logoColor=white)
 ![Oracle](https://img.shields.io/badge/-Oracle-F80000?style=flat&logo=oracle&logoColor=white)
 ![MS SQL Server](https://img.shields.io/badge/-MS%20SQL%20Server-CC2927?style=flat&logo=microsoft-sql-server&logoColor=white)
+![DynamoDB](https://img.shields.io/badge/-DynamoDB-4053D6?style=flat&logo=amazon-dynamodb&logoColor=white)
 
 #### **DevOps & Cloud**
 ![Docker](https://img.shields.io/badge/-Docker-2496ED?style=flat&logo=docker&logoColor=white)
@@ -126,7 +131,9 @@ I'm a passionate **full-stack developer** with over **15 years of experience** b
 
 #### **Testing & CI/CD**
 ![Jest](https://img.shields.io/badge/-Jest-C21325?style=flat&logo=jest&logoColor=white)
+![Vitest](https://img.shields.io/badge/-Vitest-6E9F18?style=flat&logo=vitest&logoColor=white)
 ![Cypress](https://img.shields.io/badge/-Cypress-17202C?style=flat&logo=cypress&logoColor=white)
+![Playwright](https://img.shields.io/badge/-Playwright-2EAD33?style=flat&logo=playwright&logoColor=white)
 ![Mocha](https://img.shields.io/badge/-Mocha-8D6748?style=flat&logo=mocha&logoColor=white)
 ![Jasmine](https://img.shields.io/badge/-Jasmine-8A4182?style=flat&logo=jasmine&logoColor=white)
 ![Jenkins](https://img.shields.io/badge/-Jenkins-D24939?style=flat&logo=jenkins&logoColor=white)
@@ -139,6 +146,9 @@ I'm a passionate **full-stack developer** with over **15 years of experience** b
 ![OpenAI](https://img.shields.io/badge/-OpenAI-412991?style=flat&logo=openai&logoColor=white)
 ![Anthropic](https://img.shields.io/badge/-Anthropic-181818?style=flat&logo=anthropic&logoColor=white)
 ![TensorFlow](https://img.shields.io/badge/-TensorFlow-FF6F00?style=flat&logo=tensorflow&logoColor=white)
+![OpenWebUI](https://img.shields.io/badge/-OpenWebUI-7C3AED?style=flat&logo=openai&logoColor=white)
+![n8n](https://img.shields.io/badge/-n8n-EA4B71?style=flat&logo=n8n&logoColor=white)
+![MCP](https://img.shields.io/badge/-MCP-000000?style=flat&logo=protocol&logoColor=white)
 
 #### **Other Tools & Technologies**
 ![Kafka](https://img.shields.io/badge/-Kafka-231F20?style=flat&logo=apache-kafka&logoColor=white)
@@ -182,7 +192,7 @@ I'm a passionate **full-stack developer** with over **15 years of experience** b
 <div align="center">
   
 [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/rodrigogs)
-[![Email](https://img.shields.io/badge/-Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:rodrigogs@gmail.com)
+[![Email](https://img.shields.io/badge/-Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:rodrigo.smscom@gmail.com)
 
 **Discord:** Rodrigo#9001
 
