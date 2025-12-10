@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rodrigo | Full-Stack Developer</title>
+    <meta name="description" content="Rodrigo - Full-Stack Developer & Open Source Enthusiast">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated background -->
+    <div class="vaporwave-bg">
+        <div class="grid-layer"></div>
+        <div class="sun"></div>
+        <div class="mountains"></div>
+        <div class="scanlines"></div>
+    </div>
+
+    <!-- Main container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="glitch-wrapper">
+                <h1 class="glitch" data-text="RODRIGO">RODRIGO</h1>
+            </div>
+            <p class="subtitle">FULL-STACK DEVELOPER • OPEN SOURCE ENTHUSIAST</p>
+            <div class="social-links">
+                <a href="https://github.com/rodrigogs" target="_blank" class="neon-button">
+                    <span>GITHUB</span>
+                </a>
+                <a href="mailto:rodrigogs@gmail.com" class="neon-button">
+                    <span>CONTACT</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav-tabs">
+            <button class="tab-button active" data-tab="about">ABOUT</button>
+            <button class="tab-button" data-tab="projects">PROJECTS</button>
+            <button class="tab-button" data-tab="stats">STATS</button>
+            <button class="tab-button" data-tab="skills">SKILLS</button>
+        </nav>
+
+        <!-- Content Sections -->
+        <main class="content">
+            <!-- About Tab -->
+            <section id="about" class="tab-content active">
+                <div class="card">
+                    <h2 class="section-title">👨‍💻 ABOUT_ME</h2>
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            <span class="terminal-dot red"></span>
+                            <span class="terminal-dot yellow"></span>
+                            <span class="terminal-dot green"></span>
+                        </div>
+                        <div class="terminal-body">
+                            <p><span class="prompt">$</span> cat about.txt</p>
+                            <p class="output">Passionate full-stack developer with 10+ years of experience</p>
+                            <p class="output">Building scalable web applications and open-source tools</p>
+                            <p class="output">Love solving complex problems with elegant code</p>
+                            <p><span class="prompt">$</span> echo $CURRENT_PROJECT</p>
+                            <p class="output">WhatsApp Backup Reader - Desktop/web app for chat visualization</p>
+                            <p><span class="prompt">$</span> cat interests.txt</p>
+                            <p class="output">• Svelte, TypeScript, AI integrations</p>
+                            <p class="output">• Node.js, Vue.js, Express, MongoDB</p>
+                            <p class="output">• Cats 🐱 | Coffee ☕ | Open Source 💜</p>
+                            <p><span class="prompt cursor">█</span></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Tab -->
+            <section id="projects" class="tab-content">
+                <div class="card">
+                    <h2 class="section-title">🚀 FEATURED_PROJECTS</h2>
+                    <div class="projects-grid" id="projectsGrid">
+                        <div class="loading">LOADING DATA...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Tab -->
+            <section id="stats" class="tab-content">
+                <div class="card">
+                    <h2 class="section-title">📊 GITHUB_STATS</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <img src="https://github-readme-stats.vercel.app/api?username=rodrigogs&show_icons=true&theme=radical&bg_color=0d1117&title_color=ff6ec7&text_color=00d9ff&icon_color=ff6ec7&border_color=ff6ec7" alt="GitHub Stats">
+                        </div>
+                        <div class="stat-card">
+                            <img src="https://github-readme-streak-stats.herokuapp.com/?user=rodrigogs&theme=radical&background=0d1117&ring=ff6ec7&fire=ff6ec7&currStreakLabel=00d9ff&sideNums=00d9ff&currStreakNum=ff6ec7&sideLabels=00d9ff&dates=8b949e&border=ff6ec7" alt="GitHub Streak">
+                        </div>
+                        <div class="stat-card">
+                            <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=rodrigogs&layout=compact&theme=radical&bg_color=0d1117&title_color=ff6ec7&text_color=00d9ff&border_color=ff6ec7" alt="Top Languages">
+                        </div>
+                        <div class="stat-card">
+                            <img src="https://github-profile-trophy.vercel.app/?username=rodrigogs&theme=radical&no-bg=true&no-frame=true&row=2&column=3&title_color=ff6ec7&text_color=00d9ff&icon_color=ff6ec7" alt="Trophies">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills Tab -->
+            <section id="skills" class="tab-content">
+                <div class="card">
+                    <h2 class="section-title">🛠️ TECH_STACK</h2>
+                    <div class="skills-container">
+                        <div class="skill-category">
+                            <h3>LANGUAGES</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">JavaScript</span>
+                                <span class="skill-tag">TypeScript</span>
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">Java</span>
+                                <span class="skill-tag">Rust</span>
+                                <span class="skill-tag">Bash</span>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>FRONTEND</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Vue.js</span>
+                                <span class="skill-tag">Svelte</span>
+                                <span class="skill-tag">Angular</span>
+                                <span class="skill-tag">Nuxt.js</span>
+                                <span class="skill-tag">Vuetify</span>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>BACKEND</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Node.js</span>
+                                <span class="skill-tag">Express</span>
+                                <span class="skill-tag">Fastify</span>
+                                <span class="skill-tag">Spring</span>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>DATABASES</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">MongoDB</span>
+                                <span class="skill-tag">PostgreSQL</span>
+                                <span class="skill-tag">MySQL</span>
+                                <span class="skill-tag">Redis</span>
+                                <span class="skill-tag">Elasticsearch</span>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>DEVOPS & CLOUD</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Docker</span>
+                                <span class="skill-tag">Kubernetes</span>
+                                <span class="skill-tag">AWS</span>
+                                <span class="skill-tag">GCP</span>
+                                <span class="skill-tag">Firebase</span>
+                                <span class="skill-tag">Heroku</span>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>TESTING & CI/CD</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Jest</span>
+                                <span class="skill-tag">Cypress</span>
+                                <span class="skill-tag">Mocha</span>
+                                <span class="skill-tag">Jenkins</span>
+                                <span class="skill-tag">CircleCI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2024 RODRIGO • BUILT WITH 💜 & VAPORWAVE VIBES</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
