@@ -133,31 +133,38 @@ I'm a passionate **full-stack developer** with over a decade of experience build
 ![CircleCI](https://img.shields.io/badge/-CircleCI-343434?style=flat&logo=circleci&logoColor=white)
 ![Travis CI](https://img.shields.io/badge/-Travis%20CI-3EAAAF?style=flat&logo=travis-ci&logoColor=white)
 
+#### **AI & Machine Learning**
+![LangChain](https://img.shields.io/badge/-LangChain-121212?style=flat&logo=chainlink&logoColor=white)
+![LangGraph](https://img.shields.io/badge/-LangGraph-FF6B6B?style=flat&logo=graphql&logoColor=white)
+![OpenAI](https://img.shields.io/badge/-OpenAI-412991?style=flat&logo=openai&logoColor=white)
+![Anthropic](https://img.shields.io/badge/-Anthropic-181818?style=flat&logo=anthropic&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/-TensorFlow-FF6F00?style=flat&logo=tensorflow&logoColor=white)
+
 #### **Other Tools & Technologies**
 ![Kafka](https://img.shields.io/badge/-Kafka-231F20?style=flat&logo=apache-kafka&logoColor=white)
 ![Hadoop](https://img.shields.io/badge/-Hadoop-66CCFF?style=flat&logo=apache-hadoop&logoColor=black)
 ![Puppeteer](https://img.shields.io/badge/-Puppeteer-40B5A4?style=flat&logo=puppeteer&logoColor=white)
 ![Pug](https://img.shields.io/badge/-Pug-A86454?style=flat&logo=pug&logoColor=white)
-![TensorFlow](https://img.shields.io/badge/-TensorFlow-FF6F00?style=flat&logo=tensorflow&logoColor=white)
 ![Unity](https://img.shields.io/badge/-Unity-000000?style=flat&logo=unity&logoColor=white)
 ![Android](https://img.shields.io/badge/-Android-3DDC84?style=flat&logo=android&logoColor=white)
 ![Arduino](https://img.shields.io/badge/-Arduino-00979D?style=flat&logo=arduino&logoColor=white)
+![Baileys](https://img.shields.io/badge/-Baileys-25D366?style=flat&logo=whatsapp&logoColor=white)
 
 ---
 
 ### 📊 GitHub Stats
 
 <div align="center">
-  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=rodrigogs&show_icons=true&theme=dracula&include_all_commits=true&count_private=true&hide_border=false&bg_color=0D1117&title_color=BD00FF&icon_color=FF6EC7&text_color=00D9FF" alt="GitHub Stats"/>
-  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=rodrigogs&layout=compact&langs_count=8&theme=dracula&hide_border=false&bg_color=0D1117&title_color=BD00FF&text_color=00D9FF" alt="Top Languages"/>
+  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=rodrigogs&show_icons=true&theme=dracula&include_all_commits=true&count_private=true&hide_border=false&bg_color=0D1117&title_color=BD00FF&icon_color=FF6EC7&text_color=00D9FF&cache_seconds=1800" alt="GitHub Stats"/>
+  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=rodrigogs&layout=compact&langs_count=8&theme=dracula&hide_border=false&bg_color=0D1117&title_color=BD00FF&text_color=00D9FF&cache_seconds=1800" alt="Top Languages"/>
 </div>
 
 <div align="center">
-  <img src="https://streak-stats.demolab.com/?user=rodrigogs&theme=dracula&hide_border=false&background=0D1117&ring=BD00FF&fire=FF6EC7&currStreakLabel=00D9FF" alt="GitHub Streak" />
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=rodrigogs&theme=dracula&hide_border=false&background=0D1117&ring=BD00FF&fire=FF6EC7&currStreakLabel=00D9FF" alt="GitHub Streak" />
 </div>
 
 <div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=rodrigogs&theme=dracula&no-frame=false&no-bg=false&margin-w=4&row=1&column=7" alt="GitHub Trophies" />
+  <img src="https://github-profile-trophy.vercel.app/?username=rodrigogs&theme=dracula&no-frame=false&no-bg=false&margin-w=4&row=1&column=7&cache_seconds=1800" alt="GitHub Trophies" />
 </div>
 
 ---
