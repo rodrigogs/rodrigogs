@@ -238,44 +238,222 @@ function activateEasterEgg() {
     const body = document.body;
     
     // Check if style already exists
-    if (!document.getElementById('rainbow-animation')) {
+    if (!document.getElementById('konami-animations')) {
         const style = document.createElement('style');
-        style.id = 'rainbow-animation';
+        style.id = 'konami-animations';
         style.textContent = `
             @keyframes rainbow {
                 0% { filter: hue-rotate(0deg); }
                 100% { filter: hue-rotate(360deg); }
             }
+            @keyframes glitchMessage {
+                0%, 100% { 
+                    transform: translate(-50%, -50%) skew(0deg);
+                    text-shadow: 0 0 10px #ff6ec7;
+                }
+                10% { 
+                    transform: translate(-52%, -48%) skew(2deg);
+                    text-shadow: -3px 0 #00d9ff, 3px 0 #ff6ec7;
+                }
+                20% { 
+                    transform: translate(-48%, -52%) skew(-2deg);
+                    text-shadow: 3px 0 #00d9ff, -3px 0 #bd00ff;
+                }
+                30% { 
+                    transform: translate(-50%, -50%) skew(0deg);
+                    text-shadow: 0 0 20px #ff6ec7;
+                }
+                40% { 
+                    transform: translate(-51%, -49%) skew(1deg);
+                    text-shadow: -2px 0 #bd00ff, 2px 0 #00d9ff;
+                }
+                50% { 
+                    transform: translate(-49%, -51%) skew(-1deg);
+                    text-shadow: 2px 0 #ff6ec7, -2px 0 #00d9ff;
+                }
+                60% { 
+                    transform: translate(-50%, -50%) skew(3deg);
+                    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+                }
+                65% { 
+                    transform: translate(-50%, -50%) skew(-3deg);
+                    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+                }
+                70% { 
+                    transform: translate(-50%, -50%) skew(0deg);
+                    clip-path: none;
+                }
+            }
+            @keyframes scanlineGlitch {
+                0%, 100% { background-position: 0 0; opacity: 0.3; }
+                25% { background-position: 0 5px; opacity: 0.5; }
+                50% { background-position: 0 -5px; opacity: 0.7; }
+                75% { background-position: 0 2px; opacity: 0.4; }
+            }
+            @keyframes chromaticShift {
+                0%, 100% { text-shadow: 0 0 10px #ff6ec7, 0 0 20px #ff6ec7; }
+                25% { text-shadow: -5px 0 #00d9ff, 5px 0 #ff6ec7, 0 0 30px #bd00ff; }
+                50% { text-shadow: 5px 0 #00d9ff, -5px 0 #ff6ec7, 0 0 40px #ffea00; }
+                75% { text-shadow: -3px 0 #bd00ff, 3px 0 #00d9ff, 0 0 35px #ff6ec7; }
+            }
+            @keyframes flickerIntense {
+                0%, 100% { opacity: 1; }
+                5% { opacity: 0.3; }
+                10% { opacity: 1; }
+                15% { opacity: 0.5; }
+                20% { opacity: 1; }
+                50% { opacity: 0.8; }
+                55% { opacity: 0.2; }
+                60% { opacity: 1; }
+                80% { opacity: 0.6; }
+                85% { opacity: 1; }
+            }
+            @keyframes distortionWave {
+                0%, 100% { transform: translate(-50%, -50%) scaleX(1) scaleY(1); }
+                10% { transform: translate(-50%, -50%) scaleX(1.02) scaleY(0.98); }
+                20% { transform: translate(-50%, -50%) scaleX(0.98) scaleY(1.02); }
+                30% { transform: translate(-50%, -50%) scaleX(1.01) scaleY(0.99); }
+                40% { transform: translate(-50%, -50%) scaleX(0.99) scaleY(1.01); }
+            }
+            .konami-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                pointer-events: none;
+                z-index: 9998;
+                background: repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 217, 255, 0.03) 2px,
+                    rgba(0, 217, 255, 0.03) 4px
+                );
+                animation: scanlineGlitch 0.1s infinite;
+            }
+            .konami-message {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, rgba(255, 110, 199, 0.95) 0%, rgba(189, 0, 255, 0.95) 100%);
+                color: #010409;
+                padding: 2rem 4rem;
+                font-size: 2rem;
+                font-weight: 900;
+                border-radius: 8px;
+                z-index: 9999;
+                box-shadow: 
+                    0 0 40px #ff6ec7,
+                    0 0 80px #bd00ff,
+                    inset 0 0 20px rgba(255, 255, 255, 0.2);
+                animation: glitchMessage 0.15s infinite, chromaticShift 0.3s infinite;
+                border: 3px solid #00d9ff;
+                text-transform: uppercase;
+                letter-spacing: 0.3rem;
+                font-family: 'Orbitron', sans-serif;
+            }
+            .konami-message::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(
+                    90deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.2) 50%,
+                    transparent 100%
+                );
+                animation: flickerIntense 0.2s infinite;
+            }
+            .konami-message::after {
+                content: '';
+                position: absolute;
+                top: -2px;
+                left: -2px;
+                right: -2px;
+                bottom: -2px;
+                background: linear-gradient(45deg, #ff6ec7, #00d9ff, #bd00ff, #ffea00);
+                z-index: -1;
+                border-radius: 10px;
+                animation: rainbow 1s linear infinite;
+                filter: blur(4px);
+            }
+            .glitch-body {
+                animation: rainbow 2s linear infinite, flickerIntense 0.5s infinite !important;
+            }
+            .glitch-text-effect {
+                position: relative;
+            }
+            .glitch-text-effect::before,
+            .glitch-text-effect::after {
+                content: '🎮 KONAMI CODE ACTIVATED! 🎮';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                opacity: 0.8;
+            }
+            .glitch-text-effect::before {
+                color: #00d9ff;
+                animation: glitchMessage 0.1s infinite;
+                clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            }
+            .glitch-text-effect::after {
+                color: #bd00ff;
+                animation: glitchMessage 0.15s infinite reverse;
+                clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+            }
         `;
         document.head.appendChild(style);
     }
     
-    body.style.animation = 'rainbow 2s linear infinite';
+    body.classList.add('glitch-body');
+    
+    // Create scanline overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'konami-overlay';
+    document.body.appendChild(overlay);
     
     setTimeout(() => {
-        body.style.animation = '';
+        body.classList.remove('glitch-body');
+        overlay.remove();
     }, 5000);
     
-    // Show secret message
+    // Show secret message with glitch effects
     const message = document.createElement('div');
-    const messageText = document.createTextNode('🎮 KONAMI CODE ACTIVATED! 🎮');
-    message.appendChild(messageText);
-    message.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(255, 110, 199, 0.95);
-        color: #010409;
-        padding: 2rem 4rem;
-        font-size: 2rem;
-        font-weight: 900;
-        border-radius: 8px;
-        z-index: 9999;
-        animation: fadeIn 0.5s ease;
-        box-shadow: 0 0 40px #ff6ec7;
-    `;
+    message.className = 'konami-message';
+    
+    const textSpan = document.createElement('span');
+    textSpan.className = 'glitch-text-effect';
+    textSpan.textContent = '🎮 KONAMI CODE ACTIVATED! 🎮';
+    message.appendChild(textSpan);
+    
     document.body.appendChild(message);
+    
+    // Add extra glitch particles
+    for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+            const glitchParticle = document.createElement('div');
+            glitchParticle.style.cssText = `
+                position: fixed;
+                left: ${Math.random() * 100}vw;
+                top: ${Math.random() * 100}vh;
+                width: ${Math.random() * 100 + 50}px;
+                height: 2px;
+                background: ${['#ff6ec7', '#00d9ff', '#bd00ff', '#ffea00'][Math.floor(Math.random() * 4)]};
+                z-index: 9997;
+                pointer-events: none;
+                opacity: ${Math.random() * 0.5 + 0.3};
+                animation: flickerIntense 0.1s infinite;
+            `;
+            document.body.appendChild(glitchParticle);
+            setTimeout(() => glitchParticle.remove(), 300);
+        }, i * 100);
+    }
     
     setTimeout(() => {
         message.style.opacity = '0';
