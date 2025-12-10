@@ -176,7 +176,7 @@ I'm a passionate **full-stack developer** with over **15 years of experience** b
 </div>
 
 <div align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=rodrigogs&theme=dracula&hide_border=false&background=0D1117&ring=BD00FF&fire=FF6EC7&currStreakLabel=00D9FF" alt="GitHub Streak" />
+  <img src="https://streak-stats.demolab.com/?user=rodrigogs&theme=dracula&hide_border=false&background=0D1117&ring=BD00FF&fire=FF6EC7&currStreakLabel=00D9FF" alt="GitHub Streak" />
 </div>
 
 <div align="center">
