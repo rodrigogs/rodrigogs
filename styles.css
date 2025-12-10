@@ -183,13 +183,31 @@ body {
 }
 
 @keyframes glitch-anim-1 {
-    0% { clip: rect(random(100) + px, 9999px, random(100) + px, 0); }
-    100% { clip: rect(random(100) + px, 9999px, random(100) + px, 0); }
+    0% { clip: rect(42px, 9999px, 98px, 0); }
+    10% { clip: rect(12px, 9999px, 78px, 0); }
+    20% { clip: rect(85px, 9999px, 140px, 0); }
+    30% { clip: rect(32px, 9999px, 88px, 0); }
+    40% { clip: rect(65px, 9999px, 112px, 0); }
+    50% { clip: rect(22px, 9999px, 95px, 0); }
+    60% { clip: rect(75px, 9999px, 128px, 0); }
+    70% { clip: rect(15px, 9999px, 82px, 0); }
+    80% { clip: rect(55px, 9999px, 105px, 0); }
+    90% { clip: rect(38px, 9999px, 92px, 0); }
+    100% { clip: rect(42px, 9999px, 98px, 0); }
 }
 
 @keyframes glitch-anim-2 {
-    0% { clip: rect(random(100) + px, 9999px, random(100) + px, 0); }
-    100% { clip: rect(random(100) + px, 9999px, random(100) + px, 0); }
+    0% { clip: rect(85px, 9999px, 140px, 0); }
+    10% { clip: rect(18px, 9999px, 72px, 0); }
+    20% { clip: rect(62px, 9999px, 118px, 0); }
+    30% { clip: rect(45px, 9999px, 102px, 0); }
+    40% { clip: rect(28px, 9999px, 88px, 0); }
+    50% { clip: rect(72px, 9999px, 125px, 0); }
+    60% { clip: rect(35px, 9999px, 95px, 0); }
+    70% { clip: rect(58px, 9999px, 108px, 0); }
+    80% { clip: rect(25px, 9999px, 85px, 0); }
+    90% { clip: rect(68px, 9999px, 122px, 0); }
+    100% { clip: rect(85px, 9999px, 140px, 0); }
 }
 
 .subtitle {
