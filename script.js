@@ -180,25 +180,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Add parallax effect to background
-let lastScrollY = window.scrollY;
-
-window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    const sun = document.querySelector('.sun');
-    const mountains = document.querySelector('.mountains');
-    
-    if (sun) {
-        sun.style.transform = `translateX(-50%) translateY(${scrollY * 0.3}px)`;
-    }
-    
-    if (mountains) {
-        mountains.style.transform = `translateY(${scrollY * 0.15}px)`;
-    }
-    
-    lastScrollY = scrollY;
-});
-
 // Add easter egg - Konami code
 let konamiCode = [];
 const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
