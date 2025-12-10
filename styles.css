@@ -86,6 +86,7 @@ body {
         0 0 100px var(--neon-purple),
         inset 0 0 40px rgba(255, 110, 199, 0.5);
     animation: sunPulse 4s ease-in-out infinite;
+    will-change: transform;
 }
 
 @keyframes sunPulse {
@@ -103,6 +104,7 @@ body {
         linear-gradient(to top, transparent, rgba(189, 0, 255, 0.3)),
         linear-gradient(135deg, transparent 40%, rgba(255, 110, 199, 0.4) 40.5%, rgba(255, 110, 199, 0.4) 50%, transparent 50.5%);
     background-size: 100% 100%, 200px 200px;
+    will-change: transform;
 }
 
 .scanlines {
