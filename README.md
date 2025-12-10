@@ -148,16 +148,16 @@ I'm a passionate **full-stack developer** with over a decade of experience build
 ### 📊 GitHub Stats
 
 <div align="center">
-  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=rodrigogs&show_icons=true&theme=dracula&include_all_commits=true&count_private=true" alt="GitHub Stats"/>
-  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=rodrigogs&layout=compact&langs_count=8&theme=dracula" alt="Top Languages"/>
+  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=rodrigogs&show_icons=true&theme=dracula&include_all_commits=true&count_private=true&hide_border=false&bg_color=0D1117&title_color=BD00FF&icon_color=FF6EC7&text_color=00D9FF" alt="GitHub Stats"/>
+  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=rodrigogs&layout=compact&langs_count=8&theme=dracula&hide_border=false&bg_color=0D1117&title_color=BD00FF&text_color=00D9FF" alt="Top Languages"/>
 </div>
 
 <div align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=rodrigogs&theme=dracula" alt="GitHub Streak" />
+  <img src="https://streak-stats.demolab.com/?user=rodrigogs&theme=dracula&hide_border=false&background=0D1117&ring=BD00FF&fire=FF6EC7&currStreakLabel=00D9FF" alt="GitHub Streak" />
 </div>
 
 <div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=rodrigogs&theme=dracula&no-frame=true&row=1&column=7" alt="GitHub Trophies" />
+  <img src="https://github-profile-trophy.vercel.app/?username=rodrigogs&theme=dracula&no-frame=false&no-bg=false&margin-w=4&row=1&column=7" alt="GitHub Trophies" />
 </div>
 
 ---
@@ -165,7 +165,7 @@ I'm a passionate **full-stack developer** with over a decade of experience build
 ### 📈 Contribution Graph
 
 <div align="center">
-  <img src="https://github-readme-activity-graph.cyclic.app/graph?username=rodrigogs&theme=dracula&hide_border=true" alt="rodrigogs's github activity graph"/>
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=rodrigogs&theme=dracula&hide_border=false&bg_color=0D1117&color=00D9FF&line=BD00FF&point=FF6EC7" alt="Contribution Graph"/>
 </div>
 
 ---
