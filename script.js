@@ -14,12 +14,32 @@ document.addEventListener('DOMContentLoaded', () => {
             // Add active class to clicked button and corresponding content
             button.classList.add('active');
             document.getElementById(targetTab).classList.add('active');
+            
+            // Animate skill bars when skills tab is activated
+            if (targetTab === 'skills') {
+                animateSkillBars();
+            }
         });
     });
 
     // Load projects data
     loadProjects();
 });
+
+// Animate skill progress bars
+function animateSkillBars() {
+    const skillBars = document.querySelectorAll('.skill-progress');
+    skillBars.forEach((bar, index) => {
+        // Reset animation
+        bar.style.width = '0%';
+        
+        // Trigger reflow to restart animation
+        setTimeout(() => {
+            const targetWidth = bar.style.width || bar.getAttribute('style').match(/width:\s*(\d+)%/)[1] + '%';
+            bar.style.width = targetWidth;
+        }, index * 30); // Stagger the animations
+    });
+}
 
 // Projects data
 const featuredProjects = [
