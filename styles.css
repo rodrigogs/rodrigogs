@@ -641,3 +641,190 @@ body {
         font-size: 1.5rem;
     }
 }
+
+/* ========================================
+   EXTRAVAGANT ENHANCEMENTS
+   ======================================== */
+
+/* Floating particles */
+.vaporwave-bg::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20% 30%, var(--neon-pink), transparent),
+        radial-gradient(2px 2px at 60% 70%, var(--neon-blue), transparent),
+        radial-gradient(1px 1px at 50% 50%, var(--neon-purple), transparent),
+        radial-gradient(1px 1px at 80% 10%, var(--neon-yellow), transparent),
+        radial-gradient(2px 2px at 90% 60%, var(--neon-pink), transparent);
+    background-size: 200% 200%;
+    background-position: 0% 0%;
+    animation: particleFloat 20s ease-in-out infinite;
+    opacity: 0.3;
+}
+
+@keyframes particleFloat {
+    0%, 100% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+}
+
+/* Holographic card effect */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 110, 199, 0.1) 50%,
+        transparent 70%
+    );
+    background-size: 200% 200%;
+    animation: holoShift 3s ease infinite;
+    pointer-events: none;
+    border-radius: 15px;
+}
+
+@keyframes holoShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Pulsing glow on skill tags */
+.skill-tag {
+    animation: skillPulse 2s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 0.1s);
+}
+
+@keyframes skillPulse {
+    0%, 100% {
+        box-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink);
+    }
+    50% {
+        box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 30px var(--neon-blue);
+    }
+}
+
+/* Enhanced terminal typing effect */
+.terminal-body .output {
+    animation: terminalFadeIn 0.3s ease-in;
+}
+
+@keyframes terminalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Project card hover enhancement */
+.project-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 
+        0 0 30px var(--neon-pink),
+        0 0 60px var(--neon-purple),
+        0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* Neon button enhancement */
+.neon-button:hover {
+    animation: neonFlicker 0.5s ease-in-out;
+}
+
+@keyframes neonFlicker {
+    0%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+/* Section title glow */
+.section-title {
+    position: relative;
+    animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow: 
+            0 0 10px var(--neon-pink),
+            0 0 20px var(--neon-pink),
+            0 0 30px var(--neon-pink);
+    }
+    50% {
+        text-shadow: 
+            0 0 20px var(--neon-blue),
+            0 0 30px var(--neon-blue),
+            0 0 40px var(--neon-blue),
+            0 0 50px var(--neon-purple);
+    }
+}
+
+/* Stats card rainbow border */
+.stat-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(
+        45deg,
+        var(--neon-pink),
+        var(--neon-purple),
+        var(--neon-blue),
+        var(--neon-yellow),
+        var(--neon-pink)
+    );
+    background-size: 400% 400%;
+    animation: rainbowBorder 4s ease infinite;
+    border-radius: 12px;
+    z-index: -1;
+}
+
+@keyframes rainbowBorder {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Tab button active enhancement */
+.tab-button.active {
+    animation: tabPulse 1s ease-in-out infinite;
+}
+
+@keyframes tabPulse {
+    0%, 100% {
+        box-shadow: 0 0 10px var(--neon-pink), inset 0 0 10px var(--neon-pink);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--neon-blue), inset 0 0 20px var(--neon-blue);
+    }
+}
+
+/* Cursor enhancement */
+.cursor {
+    animation: cursorBlink 0.7s infinite, cursorGlow 2s ease-in-out infinite;
+}
+
+@keyframes cursorGlow {
+    0%, 100% {
+        color: var(--neon-pink);
+        text-shadow: 0 0 10px var(--neon-pink);
+    }
+    50% {
+        color: var(--neon-blue);
+        text-shadow: 0 0 20px var(--neon-blue);
+    }
+}

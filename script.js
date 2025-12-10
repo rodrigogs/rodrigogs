@@ -343,3 +343,145 @@ const observer = new MutationObserver((mutations) => {
 document.querySelectorAll('.tab-content').forEach((tab) => {
     observer.observe(tab, { attributes: true });
 });
+
+// ========================================
+// EXTRAVAGANT ENHANCEMENTS
+// ========================================
+
+// Add animated skill tag indices for staggered animations
+document.addEventListener('DOMContentLoaded', () => {
+    const skillTags = document.querySelectorAll('.skill-tag');
+    skillTags.forEach((tag, index) => {
+        tag.style.setProperty('--i', index);
+    });
+});
+
+// Parallax effect on scroll
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const sun = document.querySelector('.sun');
+    const mountains = document.querySelector('.mountains');
+    
+    if (sun) {
+        sun.style.transform = `translateY(${scrolled * 0.5}px)`;
+    }
+    if (mountains) {
+        mountains.style.transform = `translateY(${scrolled * 0.3}px)`;
+    }
+});
+
+// Add hover sound effect simulation (visual feedback)
+document.querySelectorAll('.neon-button, .tab-button, .project-card').forEach(element => {
+    element.addEventListener('mouseenter', function() {
+        this.style.transform = 'scale(1.05)';
+        this.style.transition = 'transform 0.2s ease';
+    });
+    
+    element.addEventListener('mouseleave', function() {
+        this.style.transform = 'scale(1)';
+    });
+});
+
+// Stats counter animation
+function animateCounter(element, target) {
+    let current = 0;
+    const increment = target / 50;
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            element.textContent = target.toLocaleString();
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(current).toLocaleString();
+        }
+    }, 30);
+}
+
+// Matrix rain effect on background (subtle)
+function createMatrixEffect() {
+    const canvas = document.createElement('canvas');
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '-1';
+    canvas.style.opacity = '0.05';
+    canvas.style.pointerEvents = 'none';
+    document.body.appendChild(canvas);
+    
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const matrix = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}';
+    const fontSize = 10;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+    
+    function draw() {
+        ctx.fillStyle = 'rgba(13, 17, 23, 0.04)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = '#ff6ec7';
+        ctx.font = fontSize + 'px monospace';
+        
+        for (let i = 0; i < drops.length; i++) {
+            const text = matrix[Math.floor(Math.random() * matrix.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+    
+    setInterval(draw, 35);
+}
+
+// Initialize matrix effect
+createMatrixEffect();
+
+// Add interactive particle trail on mouse move
+document.addEventListener('mousemove', (e) => {
+    if (Math.random() > 0.9) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #ff6ec7, transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            left: ${e.clientX}px;
+            top: ${e.clientY}px;
+            animation: particleFade 1s ease-out forwards;
+        `;
+        
+        document.body.appendChild(particle);
+        
+        setTimeout(() => particle.remove(), 1000);
+    }
+});
+
+// Add particle fade animation
+const particleStyle = document.createElement('style');
+particleStyle.textContent = `
+    @keyframes particleFade {
+        to {
+            opacity: 0;
+            transform: translateY(-20px) scale(0);
+        }
+    }
+`;
+document.head.appendChild(particleStyle);
+
+// Enhanced terminal cursor effect
+setInterval(() => {
+    const cursor = document.querySelector('.cursor');
+    if (cursor) {
+        cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
+    }
+}, 500);
