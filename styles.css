@@ -53,6 +53,7 @@ body {
     background-size: 50px 50px;
     transform: perspective(500px) rotateX(60deg);
     transform-origin: bottom;
+    will-change: transform;
     animation: gridMove 20s linear infinite;
 }
 
