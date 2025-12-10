@@ -331,21 +331,34 @@ function throttle(func, delay) {
     };
 }
 
-// Parallax effect on scroll - THROTTLED for performance
-const handleParallax = throttle(() => {
+// Parallax effect on scroll - SMOOTH with requestAnimationFrame
+let ticking = false;
+let lastScrollY = 0;
+
+function updateParallax() {
     const scrolled = window.pageYOffset;
     const sun = document.querySelector('.sun');
     const mountains = document.querySelector('.mountains');
     
     if (sun) {
-        sun.style.transform = `translateY(${scrolled * 0.5}px)`;
+        // Preserve the translateX(-50%) while adding parallax translateY
+        sun.style.transform = `translateX(-50%) translateY(${scrolled * 0.5}px)`;
     }
     if (mountains) {
         mountains.style.transform = `translateY(${scrolled * 0.3}px)`;
     }
-}, 16); // ~60fps
+    
+    ticking = false;
+}
 
-window.addEventListener('scroll', handleParallax, { passive: true });
+window.addEventListener('scroll', () => {
+    lastScrollY = window.pageYOffset;
+    
+    if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+    }
+}, { passive: true });
 
 // Add hover effects - CSS-based, no JS transforms needed
 // Removed redundant JS hover handlers as CSS handles this better
