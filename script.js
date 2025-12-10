@@ -202,15 +202,32 @@ window.addEventListener('scroll', () => {
 // Add easter egg - Konami code
 let konamiCode = [];
 const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+const validKeys = new Set(konamiSequence);
+let lastKeyTime = 0;
+const keyTimeout = 1000; // Reset if more than 1 second between keys
 
 document.addEventListener('keydown', (e) => {
+    // Only process keys that could be part of the sequence
+    if (!validKeys.has(e.key)) {
+        return;
+    }
+    
+    const currentTime = Date.now();
+    
+    // Reset if too much time has passed
+    if (currentTime - lastKeyTime > keyTimeout) {
+        konamiCode = [];
+    }
+    
+    lastKeyTime = currentTime;
     konamiCode.push(e.key);
     
     if (konamiCode.length > konamiSequence.length) {
         konamiCode.shift();
     }
     
-    if (konamiCode.join(',') === konamiSequence.join(',')) {
+    if (konamiCode.length === konamiSequence.length && 
+        konamiCode.every((key, index) => key === konamiSequence[index])) {
         activateEasterEgg();
         konamiCode = [];
     }
@@ -263,19 +280,30 @@ function activateEasterEgg() {
 // Add typing effect to terminal
 const terminalBody = document.querySelector('.terminal-body');
 if (terminalBody) {
-    const originalContent = terminalBody.innerHTML;
+    const lines = [
+        '<p><span class="prompt">$</span> cat about.txt</p>',
+        '<p class="output">Passionate full-stack developer with 10+ years of experience</p>',
+        '<p class="output">Building scalable web applications and open-source tools</p>',
+        '<p class="output">Love solving complex problems with elegant code</p>',
+        '<p><span class="prompt">$</span> echo $CURRENT_PROJECT</p>',
+        '<p class="output">WhatsApp Backup Reader - Desktop/web app for chat visualization</p>',
+        '<p><span class="prompt">$</span> cat interests.txt</p>',
+        '<p class="output">• Svelte, TypeScript, AI integrations</p>',
+        '<p class="output">• Node.js, Vue.js, Express, MongoDB</p>',
+        '<p class="output">• Cats 🐱 | Coffee ☕ | Open Source 💜</p>',
+        '<p><span class="prompt cursor">█</span></p>'
+    ];
+    
     terminalBody.innerHTML = '';
     
-    let index = 0;
-    const speed = 20;
+    let lineIndex = 0;
+    const speed = 300;
     
     function typeWriter() {
-        if (index < originalContent.length) {
-            terminalBody.innerHTML += originalContent.charAt(index);
-            index++;
+        if (lineIndex < lines.length) {
+            terminalBody.innerHTML += lines[lineIndex];
+            lineIndex++;
             setTimeout(typeWriter, speed);
-        } else {
-            terminalBody.innerHTML = originalContent;
         }
     }
     
