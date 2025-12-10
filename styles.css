@@ -16,12 +16,22 @@
     box-sizing: border-box;
 }
 
+/* Performance optimizations */
 body {
     font-family: 'Share Tech Mono', monospace;
     background: var(--darker-bg);
     color: var(--text-primary);
     overflow-x: hidden;
     min-height: 100vh;
+}
+
+/* Reduce animations on mobile for better performance */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
 /* Vaporwave Background */
@@ -646,7 +656,7 @@ body {
    EXTRAVAGANT ENHANCEMENTS
    ======================================== */
 
-/* Floating particles */
+/* Floating particles - OPTIMIZED: Simpler, slower animation */
 .vaporwave-bg::before {
     content: '';
     position: absolute;
@@ -655,22 +665,16 @@ body {
     background-image: 
         radial-gradient(2px 2px at 20% 30%, var(--neon-pink), transparent),
         radial-gradient(2px 2px at 60% 70%, var(--neon-blue), transparent),
-        radial-gradient(1px 1px at 50% 50%, var(--neon-purple), transparent),
-        radial-gradient(1px 1px at 80% 10%, var(--neon-yellow), transparent),
-        radial-gradient(2px 2px at 90% 60%, var(--neon-pink), transparent);
-    background-size: 200% 200%;
-    background-position: 0% 0%;
-    animation: particleFloat 20s ease-in-out infinite;
-    opacity: 0.3;
+        radial-gradient(1px 1px at 50% 50%, var(--neon-purple), transparent);
+    background-size: 100% 100%;
+    opacity: 0.2;
+    pointer-events: none;
 }
 
-@keyframes particleFloat {
-    0%, 100% { background-position: 0% 0%; }
-    50% { background-position: 100% 100%; }
-}
+/* Removed expensive animation for better performance */
 
-/* Holographic card effect */
-.card::before {
+/* Holographic card effect - OPTIMIZED: Only on hover */
+.card:hover::before {
     content: '';
     position: absolute;
     top: 0;
@@ -684,7 +688,7 @@ body {
         transparent 70%
     );
     background-size: 200% 200%;
-    animation: holoShift 3s ease infinite;
+    animation: holoShift 2s ease infinite;
     pointer-events: none;
     border-radius: 15px;
 }
@@ -694,8 +698,8 @@ body {
     50% { background-position: 100% 50%; }
 }
 
-/* Pulsing glow on skill tags */
-.skill-tag {
+/* Pulsing glow on skill tags - OPTIMIZED: Reduced to every 3rd tag */
+.skill-tag:nth-child(3n) {
     animation: skillPulse 2s ease-in-out infinite;
     animation-delay: calc(var(--i, 0) * 0.1s);
 }
@@ -745,86 +749,45 @@ body {
     50% { opacity: 1; }
 }
 
-/* Section title glow */
+/* Section title glow - OPTIMIZED: Slower animation */
 .section-title {
     position: relative;
-    animation: titleGlow 3s ease-in-out infinite;
+    animation: titleGlow 4s ease-in-out infinite;
 }
 
 @keyframes titleGlow {
     0%, 100% {
         text-shadow: 
             0 0 10px var(--neon-pink),
-            0 0 20px var(--neon-pink),
-            0 0 30px var(--neon-pink);
+            0 0 20px var(--neon-pink);
     }
     50% {
         text-shadow: 
-            0 0 20px var(--neon-blue),
-            0 0 30px var(--neon-blue),
-            0 0 40px var(--neon-blue),
-            0 0 50px var(--neon-purple);
+            0 0 15px var(--neon-blue),
+            0 0 25px var(--neon-blue),
+            0 0 35px var(--neon-purple);
     }
 }
 
-/* Stats card rainbow border */
+/* Stats card rainbow border - OPTIMIZED: Simpler gradient, slower animation */
 .stat-card {
     position: relative;
     overflow: hidden;
-}
-
-.stat-card::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(
-        45deg,
-        var(--neon-pink),
-        var(--neon-purple),
-        var(--neon-blue),
-        var(--neon-yellow),
-        var(--neon-pink)
-    );
-    background-size: 400% 400%;
-    animation: rainbowBorder 4s ease infinite;
+    border: 2px solid transparent;
+    background: 
+        linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+        linear-gradient(45deg, var(--neon-pink), var(--neon-purple), var(--neon-blue)) border-box;
     border-radius: 12px;
-    z-index: -1;
 }
 
-@keyframes rainbowBorder {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-}
+/* Removed expensive ::before pseudo-element animation */
 
-/* Tab button active enhancement */
+/* Tab button active enhancement - OPTIMIZED: Simpler animation */
 .tab-button.active {
-    animation: tabPulse 1s ease-in-out infinite;
+    box-shadow: 0 0 15px var(--neon-pink), inset 0 0 15px var(--neon-pink);
 }
 
-@keyframes tabPulse {
-    0%, 100% {
-        box-shadow: 0 0 10px var(--neon-pink), inset 0 0 10px var(--neon-pink);
-    }
-    50% {
-        box-shadow: 0 0 20px var(--neon-blue), inset 0 0 20px var(--neon-blue);
-    }
-}
+/* Removed infinite pulse animation for better performance */
 
-/* Cursor enhancement */
-.cursor {
-    animation: cursorBlink 0.7s infinite, cursorGlow 2s ease-in-out infinite;
-}
-
-@keyframes cursorGlow {
-    0%, 100% {
-        color: var(--neon-pink);
-        text-shadow: 0 0 10px var(--neon-pink);
-    }
-    50% {
-        color: var(--neon-blue);
-        text-shadow: 0 0 20px var(--neon-blue);
-    }
-}
+/* Cursor enhancement - MOVED TO JS/CSS for better performance */
+/* Animation defined in script.js to avoid duplicate definitions */
