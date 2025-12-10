@@ -9,7 +9,7 @@
 
 <p align="center">
   <a href="https://rodrigogs.github.io/rodrigogs/">
-    <img src="https://img.shields.io/badge/🌐_Visit_My_Portfolio-FF6EC7?style=for-the-badge&logoColor=white" alt="Portfolio">
+    <img src="https://img.shields.io/badge/🚀_Interactive_Profile-FF6EC7?style=for-the-badge&logoColor=white" alt="Interactive Profile">
   </a>
 </p>
 
