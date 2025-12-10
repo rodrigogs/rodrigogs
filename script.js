@@ -308,7 +308,7 @@ document.querySelectorAll('.tab-content').forEach((tab) => {
 });
 
 // ========================================
-// EXTRAVAGANT ENHANCEMENTS
+// EXTRAVAGANT ENHANCEMENTS - OPTIMIZED
 // ========================================
 
 // Add animated skill tag indices for staggered animations
@@ -319,8 +319,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Parallax effect on scroll
-window.addEventListener('scroll', () => {
+// Throttle helper for performance
+function throttle(func, delay) {
+    let lastCall = 0;
+    return function(...args) {
+        const now = Date.now();
+        if (now - lastCall >= delay) {
+            lastCall = now;
+            return func(...args);
+        }
+    };
+}
+
+// Parallax effect on scroll - THROTTLED for performance
+const handleParallax = throttle(() => {
     const scrolled = window.pageYOffset;
     const sun = document.querySelector('.sun');
     const mountains = document.querySelector('.mountains');
@@ -331,36 +343,14 @@ window.addEventListener('scroll', () => {
     if (mountains) {
         mountains.style.transform = `translateY(${scrolled * 0.3}px)`;
     }
-});
+}, 16); // ~60fps
 
-// Add hover sound effect simulation (visual feedback)
-document.querySelectorAll('.neon-button, .tab-button, .project-card').forEach(element => {
-    element.addEventListener('mouseenter', function() {
-        this.style.transform = 'scale(1.05)';
-        this.style.transition = 'transform 0.2s ease';
-    });
-    
-    element.addEventListener('mouseleave', function() {
-        this.style.transform = 'scale(1)';
-    });
-});
+window.addEventListener('scroll', handleParallax, { passive: true });
 
-// Stats counter animation
-function animateCounter(element, target) {
-    let current = 0;
-    const increment = target / 50;
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-            element.textContent = target.toLocaleString();
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.floor(current).toLocaleString();
-        }
-    }, 30);
-}
+// Add hover effects - CSS-based, no JS transforms needed
+// Removed redundant JS hover handlers as CSS handles this better
 
-// Matrix rain effect on background (subtle)
+// Matrix rain effect - OPTIMIZED with requestAnimationFrame
 function createMatrixEffect() {
     const canvas = document.createElement('canvas');
     canvas.style.position = 'fixed';
@@ -373,23 +363,34 @@ function createMatrixEffect() {
     canvas.style.pointerEvents = 'none';
     document.body.appendChild(canvas);
     
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: false }); // Performance boost
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     
     const matrix = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}';
     const fontSize = 10;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
     
-    function draw() {
+    let lastFrame = 0;
+    const frameDelay = 50; // Reduced frequency for better performance
+    
+    function draw(timestamp) {
+        if (timestamp - lastFrame < frameDelay) {
+            requestAnimationFrame(draw);
+            return;
+        }
+        lastFrame = timestamp;
+        
         ctx.fillStyle = 'rgba(13, 17, 23, 0.04)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         ctx.fillStyle = '#ff6ec7';
         ctx.font = fontSize + 'px monospace';
         
-        for (let i = 0; i < drops.length; i++) {
+        // Only update a subset of drops each frame for performance
+        const step = 3;
+        for (let i = 0; i < drops.length; i += step) {
             const text = matrix[Math.floor(Math.random() * matrix.length)];
             ctx.fillText(text, i * fontSize, drops[i] * fontSize);
             
@@ -398,40 +399,66 @@ function createMatrixEffect() {
             }
             drops[i]++;
         }
+        
+        requestAnimationFrame(draw);
     }
     
-    setInterval(draw, 35);
+    requestAnimationFrame(draw);
+    
+    // Cleanup on resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }, 250);
+    });
 }
 
-// Initialize matrix effect
-createMatrixEffect();
+// Initialize matrix effect only if not on mobile for performance
+if (window.innerWidth > 768) {
+    createMatrixEffect();
+}
 
-// Add interactive particle trail on mouse move
-document.addEventListener('mousemove', (e) => {
-    if (Math.random() > 0.9) {
-        const particle = document.createElement('div');
-        particle.style.cssText = `
-            position: fixed;
-            width: 4px;
-            height: 4px;
-            background: radial-gradient(circle, #ff6ec7, transparent);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            left: ${e.clientX}px;
-            top: ${e.clientY}px;
-            animation: particleFade 1s ease-out forwards;
-        `;
-        
-        document.body.appendChild(particle);
-        
-        setTimeout(() => particle.remove(), 1000);
-    }
-});
+// Mouse particle trail - HEAVILY THROTTLED and with pooling
+let particlePool = [];
+let activeParticles = 0;
+const MAX_PARTICLES = 20;
 
-// Add particle fade animation
+const handleMouseMove = throttle((e) => {
+    if (activeParticles >= MAX_PARTICLES) return;
+    
+    const particle = document.createElement('div');
+    particle.className = 'mouse-particle';
+    particle.style.left = e.clientX + 'px';
+    particle.style.top = e.clientY + 'px';
+    
+    document.body.appendChild(particle);
+    activeParticles++;
+    
+    setTimeout(() => {
+        particle.remove();
+        activeParticles--;
+    }, 1000);
+}, 100); // Only create particle every 100ms max
+
+document.addEventListener('mousemove', handleMouseMove, { passive: true });
+
+// Add particle style via CSS class instead of inline styles
 const particleStyle = document.createElement('style');
 particleStyle.textContent = `
+    .mouse-particle {
+        position: fixed;
+        width: 4px;
+        height: 4px;
+        background: radial-gradient(circle, #ff6ec7, transparent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        animation: particleFade 1s ease-out forwards;
+        will-change: opacity, transform;
+    }
     @keyframes particleFade {
         to {
             opacity: 0;
@@ -441,10 +468,15 @@ particleStyle.textContent = `
 `;
 document.head.appendChild(particleStyle);
 
-// Enhanced terminal cursor effect
-setInterval(() => {
-    const cursor = document.querySelector('.cursor');
-    if (cursor) {
-        cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
+// Enhanced terminal cursor effect - Use CSS animation instead
+const cursorStyle = document.createElement('style');
+cursorStyle.textContent = `
+    .cursor {
+        animation: cursorBlink 1s infinite;
     }
-}, 500);
+    @keyframes cursorBlink {
+        0%, 49% { opacity: 1; }
+        50%, 100% { opacity: 0; }
+    }
+`;
+document.head.appendChild(cursorStyle);
