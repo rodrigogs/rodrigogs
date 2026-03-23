@@ -235,116 +235,125 @@ attribute vec2 a_position;
 void main() { gl_Position = vec4(a_position, 0.0, 1.0); }
 `;
 
+// Proper ray-marching black hole shader with gravitational lensing
+// Based on Schwarzschild metric geodesic integration
 const BLACKHOLE_FRAG = `
 precision highp float;
 uniform vec2 u_resolution;
 uniform float u_time;
-uniform float u_progress; // 0 = sun, 1 = full black hole
+uniform float u_progress;
 
 #define PI 3.14159265
-#define RS 0.22  // Schwarzschild radius
+#define STEPS 128
+#define BH_MASS 1.0
+#define DISK_INNER 2.6
+#define DISK_OUTER 12.0
 
-// Disk color: hot inner (white-yellow), warm middle (orange), cool outer (red-brown)
-vec3 diskColor(float r, float angle) {
-    float t = smoothstep(RS * 1.5, 0.9, r);
-    vec3 hot = vec3(1.0, 0.95, 0.8);
-    vec3 warm = vec3(1.0, 0.5, 0.15);
-    vec3 cool = vec3(0.6, 0.1, 0.02);
-    vec3 col = mix(hot, warm, smoothstep(0.0, 0.5, t));
-    col = mix(col, cool, smoothstep(0.4, 1.0, t));
-    // Brightness varies with angle (doppler-like)
-    float doppler = 0.7 + 0.3 * sin(angle * 3.0 + u_time * 0.5);
-    // Brighter closer to the black hole
-    float brightness = (1.0 - t) * 2.0 + 0.3;
+// Blackbody-inspired disk color: hot inner edge, cool outer
+vec3 diskColor(float r, float phi) {
+    float t = (r - DISK_INNER) / (DISK_OUTER - DISK_INNER);
+    t = clamp(t, 0.0, 1.0);
+    // Hot white/yellow inner -> orange middle -> deep red outer
+    vec3 hot  = vec3(1.0, 0.98, 0.9) * 1.8;
+    vec3 mid  = vec3(1.0, 0.6, 0.15) * 1.2;
+    vec3 cool = vec3(0.7, 0.15, 0.03) * 0.6;
+    vec3 col = mix(hot, mid, smoothstep(0.0, 0.4, t));
+    col = mix(col, cool, smoothstep(0.3, 1.0, t));
+    // Doppler-like brightness variation (approaching side brighter)
+    float doppler = 0.75 + 0.25 * sin(phi + u_time * 0.4);
+    // Brightness falls off with distance
+    float brightness = 1.0 / (1.0 + t * 2.0);
     return col * brightness * doppler;
 }
 
+// Rotate 2D
+mat2 rot(float a) { float c=cos(a), s=sin(a); return mat2(c,-s,s,c); }
+
 void main() {
-    vec2 uv = (gl_FragCoord.xy - u_resolution * 0.5) / min(u_resolution.x, u_resolution.y) * 2.0;
-    float r = length(uv);
-    float angle = atan(uv.y, uv.x);
+    vec2 uv = (gl_FragCoord.xy * 2.0 - u_resolution) / min(u_resolution.x, u_resolution.y);
     float progress = u_progress;
+    float gravity = progress * BH_MASS;
 
-    // Gravitational lensing strength scales with progress
-    float gravity = progress * 1.5;
+    // Camera: slightly above the disk plane, looking at center
+    float camDist = 22.0;
+    float camHeight = 6.0 * progress + 0.01;
+    vec3 ro = vec3(0.0, camHeight, -camDist);
+    vec3 lookAt = vec3(0.0, 0.0, 0.0);
+    // Camera matrix
+    vec3 fwd = normalize(lookAt - ro);
+    vec3 right = normalize(cross(fwd, vec3(0,1,0)));
+    vec3 up = cross(right, fwd);
+    vec3 rd = normalize(fwd * 2.0 + right * uv.x + up * uv.y);
 
-    // Ray direction (simplified - deflect toward center based on gravity)
-    vec2 dir = normalize(uv);
-    float deflection = gravity * RS * RS / max(r * r, 0.001);
-    vec2 lensedUV = uv + dir * deflection;
-    float lensedR = length(lensedUV);
-    float lensedAngle = atan(lensedUV.y, lensedUV.x);
-
+    // Ray march through curved spacetime
+    vec3 pos = ro;
+    vec3 vel = rd * 0.5;
     vec3 color = vec3(0.0);
     float alpha = 0.0;
+    float prevY = pos.y;
+    bool captured = false;
 
-    // Event horizon radius scales with progress
-    float eventHorizon = RS * progress;
+    for (int i = 0; i < STEPS; i++) {
+        float r = length(pos);
 
-    // === ACCRETION DISK (in the horizontal plane, viewed at angle) ===
-    // The disk is in the y=0 plane, we're viewing from above at ~15 degrees
-    // Project: disk appears as a thin band around the equator
-    float viewAngle = 0.25; // tilt angle
-    float diskY = lensedUV.y / max(lensedR, 0.01);
-    float diskPlane = abs(diskY - 0.0) / (1.0 + viewAngle);
-
-    // Main disk band (horizontal)
-    float diskThickness = 0.08 + 0.15 * (1.0 - progress * 0.5);
-    float diskMask = smoothstep(diskThickness, diskThickness * 0.3, diskPlane);
-    float diskR = lensedR;
-    if (diskMask > 0.0 && diskR > eventHorizon * 1.3 && diskR < 0.95) {
-        vec3 dc = diskColor(diskR, lensedAngle + u_time * 0.3);
-        color += dc * diskMask * progress;
-        alpha = max(alpha, diskMask * progress);
-    }
-
-    // === GRAVITATIONAL LENSING: light from back of disk bent over top/bottom ===
-    // This creates the vertical ring effect (the Interstellar signature)
-    float lensingStrength = progress;
-    if (lensingStrength > 0.1) {
-        // Light from behind bends over poles
-        float poleY = abs(uv.y);
-        float poleX = abs(uv.x);
-        // Vertical ring: narrow in x, extends in y, at radius ~ event horizon
-        float ringDist = abs(poleX) - eventHorizon * 0.3;
-        float ringMask = smoothstep(0.06, 0.0, abs(ringDist)) * smoothstep(eventHorizon * 0.5, eventHorizon * 1.5, poleY) * smoothstep(0.9, eventHorizon * 2.0, poleY);
-        if (r > eventHorizon && ringMask > 0.01) {
-            float rt = 1.0 - smoothstep(eventHorizon, 0.7, r);
-            vec3 lensedColor = diskColor(r * 1.5, angle + PI * 0.5 + u_time * 0.2) * 0.8;
-            color += lensedColor * ringMask * lensingStrength;
-            alpha = max(alpha, ringMask * lensingStrength * 0.8);
+        // Event horizon: Schwarzschild radius = 2 * GM/c^2, normalized to 2.0
+        float rs = 2.0 * gravity;
+        if (r < rs) {
+            captured = true;
+            alpha = max(alpha, progress);
+            break;
         }
+
+        // Gravitational acceleration (Newtonian approx for visual)
+        // F = -GM/r^2 in radial direction
+        float accelMag = gravity * 1.5 / (r * r);
+        vec3 accel = -normalize(pos) * accelMag;
+        vel += accel * 0.5;
+        vec3 newPos = pos + vel * 0.5;
+        float newR = length(newPos);
+
+        // Check disk intersection: ray crossed y=0 plane
+        if (pos.y * newPos.y < 0.0 && newR > rs * 1.3 && newR < DISK_OUTER) {
+            // Interpolate exact crossing point
+            float t_cross = abs(pos.y) / max(abs(pos.y - newPos.y), 0.001);
+            vec3 hitPos = mix(pos, newPos, t_cross);
+            float hitR = length(hitPos.xz);
+            float hitPhi = atan(hitPos.z, hitPos.x);
+
+            if (hitR > DISK_INNER && hitR < DISK_OUTER) {
+                vec3 dc = diskColor(hitR, hitPhi);
+                // Accumulate (front and back crossings both contribute)
+                float diskAlpha = 0.9 * progress;
+                color += dc * diskAlpha * (1.0 - alpha);
+                alpha = min(1.0, alpha + diskAlpha);
+            }
+        }
+
+        prevY = pos.y;
+        pos = newPos;
+
+        // Escaped to infinity
+        if (r > 50.0) break;
     }
 
-    // === PHOTON SPHERE (bright thin ring just outside event horizon) ===
-    float photonR = eventHorizon * 1.1 + 0.01;
-    float photonRing = smoothstep(0.015, 0.0, abs(r - photonR)) * progress;
-    if (photonRing > 0.0) {
-        vec3 photonColor = vec3(0.9, 0.95, 1.0) * 2.0;
-        color += photonColor * photonRing;
-        alpha = max(alpha, photonRing);
-    }
-
-    // === INNER GLOW (just outside event horizon) ===
-    float innerGlow = smoothstep(eventHorizon * 2.0, eventHorizon, r) * progress;
-    if (innerGlow > 0.0 && r > eventHorizon) {
-        vec3 glowCol = vec3(0.8, 0.6, 0.3) * innerGlow * 0.5;
-        color += glowCol;
-        alpha = max(alpha, innerGlow * 0.4);
-    }
-
-    // === EVENT HORIZON (absolute black) ===
-    if (r < eventHorizon) {
+    // Event horizon fill
+    if (captured) {
         color = vec3(0.0);
-        alpha = progress;
     }
 
-    // === OUTER GLOW (ambient light around the whole thing) ===
-    float outerGlow = smoothstep(0.8, 0.2, r) * 0.15 * progress;
-    color += vec3(0.4, 0.2, 0.6) * outerGlow;
-    alpha = max(alpha, outerGlow);
+    // Subtle outer glow
+    float dist2d = length(uv);
+    float glow = smoothstep(1.2, 0.15, dist2d) * 0.08 * progress;
+    color += vec3(0.3, 0.15, 0.5) * glow * (1.0 - alpha);
+    alpha = max(alpha, glow);
 
-    // Output
+    // Photon ring: a subtle bright ring at the shadow edge
+    // The shadow radius for Schwarzschild is ~2.6 * M at our camera distance
+    float shadowR = 2.6 * gravity / camDist * 2.0;
+    float ring = smoothstep(0.02, 0.0, abs(dist2d - shadowR)) * progress * 0.6;
+    color += vec3(0.9, 0.85, 0.7) * ring;
+    alpha = max(alpha, ring);
+
     gl_FragColor = vec4(color, alpha);
 }
 `;
