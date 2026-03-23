@@ -1,4 +1,4 @@
-'use strict';
+import { initBlackHole } from './blackhole.js';
 
 // ========================================
 // Static Data
@@ -227,186 +227,8 @@ function initStarfield() {
 }
 
 // ========================================
-// Parallax + WebGL Black Hole Shader
+// Parallax + Three.js Black Hole
 // ========================================
-
-const BLACKHOLE_VERT = `
-attribute vec2 a_position;
-void main() { gl_Position = vec4(a_position, 0.0, 1.0); }
-`;
-
-// Proper ray-marching black hole shader with gravitational lensing
-// Based on Schwarzschild metric geodesic integration
-const BLACKHOLE_FRAG = `
-precision highp float;
-uniform vec2 u_resolution;
-uniform float u_time;
-uniform float u_progress;
-
-#define PI 3.14159265
-#define STEPS 128
-#define BH_MASS 1.0
-#define DISK_INNER 2.6
-#define DISK_OUTER 12.0
-
-// Blackbody-inspired disk color: hot inner edge, cool outer
-vec3 diskColor(float r, float phi) {
-    float t = (r - DISK_INNER) / (DISK_OUTER - DISK_INNER);
-    t = clamp(t, 0.0, 1.0);
-    // Hot white/yellow inner -> orange middle -> deep red outer
-    vec3 hot  = vec3(1.0, 0.98, 0.9) * 1.8;
-    vec3 mid  = vec3(1.0, 0.6, 0.15) * 1.2;
-    vec3 cool = vec3(0.7, 0.15, 0.03) * 0.6;
-    vec3 col = mix(hot, mid, smoothstep(0.0, 0.4, t));
-    col = mix(col, cool, smoothstep(0.3, 1.0, t));
-    // Doppler-like brightness variation (approaching side brighter)
-    float doppler = 0.75 + 0.25 * sin(phi + u_time * 0.4);
-    // Brightness falls off with distance
-    float brightness = 1.0 / (1.0 + t * 2.0);
-    return col * brightness * doppler;
-}
-
-// Rotate 2D
-mat2 rot(float a) { float c=cos(a), s=sin(a); return mat2(c,-s,s,c); }
-
-void main() {
-    vec2 uv = (gl_FragCoord.xy * 2.0 - u_resolution) / min(u_resolution.x, u_resolution.y);
-    float progress = u_progress;
-    float gravity = progress * BH_MASS;
-
-    // Camera: slightly above the disk plane, looking at center
-    float camDist = 22.0;
-    float camHeight = 6.0 * progress + 0.01;
-    vec3 ro = vec3(0.0, camHeight, -camDist);
-    vec3 lookAt = vec3(0.0, 0.0, 0.0);
-    // Camera matrix
-    vec3 fwd = normalize(lookAt - ro);
-    vec3 right = normalize(cross(fwd, vec3(0,1,0)));
-    vec3 up = cross(right, fwd);
-    vec3 rd = normalize(fwd * 2.0 + right * uv.x + up * uv.y);
-
-    // Ray march through curved spacetime
-    vec3 pos = ro;
-    vec3 vel = rd * 0.5;
-    vec3 color = vec3(0.0);
-    float alpha = 0.0;
-    float prevY = pos.y;
-    bool captured = false;
-
-    for (int i = 0; i < STEPS; i++) {
-        float r = length(pos);
-
-        // Event horizon: Schwarzschild radius = 2 * GM/c^2, normalized to 2.0
-        float rs = 2.0 * gravity;
-        if (r < rs) {
-            captured = true;
-            alpha = max(alpha, progress);
-            break;
-        }
-
-        // Gravitational acceleration (Newtonian approx for visual)
-        // F = -GM/r^2 in radial direction
-        float accelMag = gravity * 1.5 / (r * r);
-        vec3 accel = -normalize(pos) * accelMag;
-        vel += accel * 0.5;
-        vec3 newPos = pos + vel * 0.5;
-        float newR = length(newPos);
-
-        // Check disk intersection: ray crossed y=0 plane
-        if (pos.y * newPos.y < 0.0 && newR > rs * 1.3 && newR < DISK_OUTER) {
-            // Interpolate exact crossing point
-            float t_cross = abs(pos.y) / max(abs(pos.y - newPos.y), 0.001);
-            vec3 hitPos = mix(pos, newPos, t_cross);
-            float hitR = length(hitPos.xz);
-            float hitPhi = atan(hitPos.z, hitPos.x);
-
-            if (hitR > DISK_INNER && hitR < DISK_OUTER) {
-                vec3 dc = diskColor(hitR, hitPhi);
-                // Accumulate (front and back crossings both contribute)
-                float diskAlpha = 0.9 * progress;
-                color += dc * diskAlpha * (1.0 - alpha);
-                alpha = min(1.0, alpha + diskAlpha);
-            }
-        }
-
-        prevY = pos.y;
-        pos = newPos;
-
-        // Escaped to infinity
-        if (r > 50.0) break;
-    }
-
-    // Event horizon fill
-    if (captured) {
-        color = vec3(0.0);
-    }
-
-    // Subtle outer glow
-    float dist2d = length(uv);
-    float glow = smoothstep(1.2, 0.15, dist2d) * 0.08 * progress;
-    color += vec3(0.3, 0.15, 0.5) * glow * (1.0 - alpha);
-    alpha = max(alpha, glow);
-
-    // Photon ring: a subtle bright ring at the shadow edge
-    // The shadow radius for Schwarzschild is ~2.6 * M at our camera distance
-    float shadowR = 2.6 * gravity / camDist * 2.0;
-    float ring = smoothstep(0.02, 0.0, abs(dist2d - shadowR)) * progress * 0.6;
-    color += vec3(0.9, 0.85, 0.7) * ring;
-    alpha = max(alpha, ring);
-
-    gl_FragColor = vec4(color, alpha);
-}
-`;
-
-function initBlackHoleShader() {
-    const canvas = document.getElementById('blackholeCanvas');
-    if (!canvas) return null;
-
-    const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false });
-    if (!gl) return null;
-
-    // Size
-    const SIZE = window.innerWidth <= 768 ? 350 : 600;
-    const DPR = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = SIZE * DPR;
-    canvas.height = SIZE * DPR;
-    gl.viewport(0, 0, canvas.width, canvas.height);
-
-    // Compile shaders
-    function compileShader(src, type) {
-        const s = gl.createShader(type);
-        gl.shaderSource(s, src);
-        gl.compileShader(s);
-        return s;
-    }
-
-    const vs = compileShader(BLACKHOLE_VERT, gl.VERTEX_SHADER);
-    const fs = compileShader(BLACKHOLE_FRAG, gl.FRAGMENT_SHADER);
-    const program = gl.createProgram();
-    gl.attachShader(program, vs);
-    gl.attachShader(program, fs);
-    gl.linkProgram(program);
-    gl.useProgram(program);
-
-    // Full-screen quad
-    const buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
-    const aPos = gl.getAttribLocation(program, 'a_position');
-    gl.enableVertexAttribArray(aPos);
-    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-
-    // Uniforms
-    const uRes = gl.getUniformLocation(program, 'u_resolution');
-    const uTime = gl.getUniformLocation(program, 'u_time');
-    const uProgress = gl.getUniformLocation(program, 'u_progress');
-
-    gl.uniform2f(uRes, canvas.width, canvas.height);
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-
-    return { gl, uTime, uProgress };
-}
 
 function initParallax() {
     const sun = document.querySelector('.sun');
@@ -418,24 +240,10 @@ function initParallax() {
     const canvas = document.getElementById('blackholeCanvas');
     const isMobile = window.innerWidth <= 768;
 
-    // Init WebGL shader
-    const shader = initBlackHoleShader();
+    // Init Three.js black hole
+    const blackhole = canvas ? initBlackHole(canvas) : null;
     let ticking = false;
-    let animating = false;
-    let currentProgress = 0;
     const heroHeight = window.innerHeight;
-
-    // Render loop
-    function renderLoop(time) {
-        if (!animating || !shader) return;
-        const { gl, uTime, uProgress } = shader;
-        gl.uniform1f(uTime, time * 0.001);
-        gl.uniform1f(uProgress, currentProgress);
-        gl.clearColor(0, 0, 0, 0);
-        gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-        requestAnimationFrame(renderLoop);
-    }
 
     window.addEventListener('scroll', () => {
         if (!ticking) {
@@ -443,7 +251,6 @@ function initParallax() {
                 const scrolled = window.scrollY;
                 const bhProgress = Math.min(scrolled / (heroHeight * 0.65), 1);
                 const eased = bhProgress * bhProgress * (3 - 2 * bhProgress);
-                currentProgress = eased;
 
                 // Sun fades out
                 if (sun) {
@@ -452,17 +259,16 @@ function initParallax() {
                 }
                 sunSlices.forEach(s => { s.style.opacity = Math.max(0, 1 - eased * 3); });
 
-                // Canvas fades in
-                if (canvas) {
+                // Black hole canvas fades in
+                if (canvas && blackhole) {
                     canvas.style.opacity = Math.min(1, eased * 2);
                     if (!isMobile) {
                         canvas.style.transform = `translate(-50%, -50%) translateY(${scrolled * 0.25}px)`;
                     }
-                    if (eased > 0.02 && !animating) {
-                        animating = true;
-                        requestAnimationFrame(renderLoop);
-                    } else if (eased <= 0.02) {
-                        animating = false;
+                    if (eased > 0.05 && !blackhole.isRunning) {
+                        blackhole.start();
+                    } else if (eased <= 0.05 && blackhole.isRunning) {
+                        blackhole.stop();
                     }
                 }
 
