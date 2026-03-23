@@ -1,0 +1,119 @@
+<h2>Page Structure & Scroll Layout</h2>
+<p class="subtitle">Single-page scroll with sticky navigation and parallax background</p>
+
+<div class="mockup" style="max-width: 500px; margin: 2rem auto;">
+  <div class="mockup-header">rodrigogs.github.io/rodrigogs</div>
+  <div class="mockup-body" style="padding: 0; background: linear-gradient(180deg, #1a0033 0%, #2d0052 40%, #4a0080 100%); color: #00d9ff; font-family: monospace; font-size: 11px; overflow: hidden;">
+
+    <!-- BG layers hint -->
+    <div style="position: relative;">
+      <!-- Sun -->
+      <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(to bottom, #ffea00, #ff6ec7); margin: 0 auto; box-shadow: 0 0 20px #ff6ec7; position: absolute; top: 60px; left: 50%; transform: translateX(-50%); opacity: 0.6;"></div>
+      <!-- Grid hint -->
+      <div style="position: absolute; bottom: 0; width: 100%; height: 40px; background: repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(255,110,199,0.2) 18px, rgba(255,110,199,0.2) 19px), repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(255,110,199,0.2) 18px, rgba(255,110,199,0.2) 19px); transform: perspective(200px) rotateX(50deg); transform-origin: bottom;"></div>
+
+      <!-- Hero Section -->
+      <div style="text-align: center; padding: 30px 15px 50px; position: relative; z-index: 1;">
+        <div style="font-size: 22px; font-weight: 900; color: #00d9ff; text-shadow: 0 0 10px #00d9ff, 0 0 20px #ff6ec7; letter-spacing: 3px;">RODRIGO</div>
+        <div style="font-size: 8px; color: #ff6ec7; letter-spacing: 2px; margin-top: 6px;">FULL-STACK DEVELOPER</div>
+        <div style="display: flex; gap: 8px; justify-content: center; margin-top: 12px;">
+          <span style="border: 1px solid #00d9ff; padding: 3px 10px; font-size: 8px; border-radius: 3px;">GITHUB</span>
+          <span style="border: 1px solid #00d9ff; padding: 3px 10px; font-size: 8px; border-radius: 3px;">CONTACT</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sticky Nav -->
+    <div style="background: rgba(13,17,23,0.95); border-bottom: 2px solid #ff6ec7; padding: 6px 0; text-align: center; font-size: 8px; letter-spacing: 1px; color: #8b949e; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(10px);">
+      <span style="color: #00d9ff; margin: 0 8px;">ABOUT</span>
+      <span style="margin: 0 8px;">PROJECTS</span>
+      <span style="margin: 0 8px;">STATS</span>
+      <span style="margin: 0 8px;">SKILLS</span>
+    </div>
+
+    <!-- About Section -->
+    <div style="padding: 15px; border-bottom: 1px solid rgba(255,110,199,0.2);">
+      <div style="font-size: 10px; color: #ff6ec7; margin-bottom: 8px; letter-spacing: 1px;">ABOUT_ME</div>
+      <div style="background: rgba(0,0,0,0.5); border: 1px solid #00d9ff; border-radius: 4px; padding: 8px; font-size: 8px; line-height: 1.6;">
+        <div><span style="color: #ff6ec7;">$</span> whoami</div>
+        <div style="color: #00d9ff; margin-left: 10px;">rodrigogs - Full-Stack Architect</div>
+        <div><span style="color: #ff6ec7;">$</span> cat experience.json</div>
+        <div style="color: #00d9ff; margin-left: 10px;">{ "years": "15+", ... }</div>
+      </div>
+    </div>
+
+    <!-- Projects Section -->
+    <div style="padding: 15px; border-bottom: 1px solid rgba(255,110,199,0.2);">
+      <div style="font-size: 10px; color: #ff6ec7; margin-bottom: 8px; letter-spacing: 1px;">FEATURED_PROJECTS</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+        <div style="background: rgba(0,0,0,0.4); border: 1px solid #00d9ff; border-radius: 4px; padding: 6px;">
+          <div style="font-size: 8px; color: #ff6ec7;">easyvpn</div>
+          <div style="font-size: 7px; color: #ffea00;">516 stars</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.4); border: 1px solid #00d9ff; border-radius: 4px; padding: 6px;">
+          <div style="font-size: 8px; color: #ff6ec7;">kairos</div>
+          <div style="font-size: 7px; color: #ffea00;">98 stars</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.4); border: 1px solid #00d9ff; border-radius: 4px; padding: 6px;">
+          <div style="font-size: 8px; color: #ff6ec7;">whats-reader</div>
+          <div style="font-size: 7px; color: #ffea00;">22 stars</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.4); border: 1px solid #00d9ff; border-radius: 4px; padding: 6px;">
+          <div style="font-size: 8px; color: #ff6ec7;">scaffold</div>
+          <div style="font-size: 7px; color: #ffea00;">167 stars</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div style="padding: 15px; border-bottom: 1px solid rgba(255,110,199,0.2);">
+      <div style="font-size: 10px; color: #ff6ec7; margin-bottom: 8px; letter-spacing: 1px;">GITHUB_STATS</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+        <div style="background: rgba(0,0,0,0.4); border: 1px solid #bd00ff; border-radius: 4px; padding: 8px; text-align: center;">
+          <div style="font-size: 16px; color: #00d9ff; font-weight: bold;">85+</div>
+          <div style="font-size: 7px; color: #8b949e;">REPOS</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.4); border: 1px solid #bd00ff; border-radius: 4px; padding: 8px; text-align: center;">
+          <div style="font-size: 16px; color: #ff6ec7; font-weight: bold;">1.2K</div>
+          <div style="font-size: 7px; color: #8b949e;">TOTAL STARS</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.4); border: 1px solid #bd00ff; border-radius: 4px; padding: 8px; text-align: center;">
+          <div style="font-size: 16px; color: #ffea00; font-weight: bold;">500+</div>
+          <div style="font-size: 7px; color: #8b949e;">COMMITS</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.4); border: 1px solid #bd00ff; border-radius: 4px; padding: 8px; text-align: center;">
+          <div style="font-size: 16px; color: #bd00ff; font-weight: bold;">15+</div>
+          <div style="font-size: 7px; color: #8b949e;">YEARS</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills Section -->
+    <div style="padding: 15px;">
+      <div style="font-size: 10px; color: #ff6ec7; margin-bottom: 8px; letter-spacing: 1px;">TECH_ARSENAL</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+        <span style="background: rgba(255,110,199,0.2); border: 1px solid #ff6ec7; padding: 2px 6px; font-size: 7px; border-radius: 3px;">JavaScript</span>
+        <span style="background: rgba(0,217,255,0.2); border: 1px solid #00d9ff; padding: 2px 6px; font-size: 7px; border-radius: 3px;">TypeScript</span>
+        <span style="background: rgba(189,0,255,0.2); border: 1px solid #bd00ff; padding: 2px 6px; font-size: 7px; border-radius: 3px;">React</span>
+        <span style="background: rgba(255,110,199,0.2); border: 1px solid #ff6ec7; padding: 2px 6px; font-size: 7px; border-radius: 3px;">Node.js</span>
+        <span style="background: rgba(0,217,255,0.2); border: 1px solid #00d9ff; padding: 2px 6px; font-size: 7px; border-radius: 3px;">Vue.js</span>
+        <span style="background: rgba(189,0,255,0.2); border: 1px solid #bd00ff; padding: 2px 6px; font-size: 7px; border-radius: 3px;">Docker</span>
+        <span style="background: rgba(255,234,0,0.15); border: 1px solid rgba(255,234,0,0.5); padding: 2px 6px; font-size: 7px; border-radius: 3px;">AWS</span>
+        <span style="background: rgba(255,110,199,0.2); border: 1px solid #ff6ec7; padding: 2px 6px; font-size: 7px; border-radius: 3px;">+ more</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div style="max-width: 700px; margin: 1.5rem auto;">
+  <h3>Key structural changes</h3>
+  <ul style="line-height: 1.8; color: #b0b0b0;">
+    <li><strong style="color: #e0e0e0;">Tabs &rarr; scroll sections</strong> &mdash; all content visible, separated by subtle dividers</li>
+    <li><strong style="color: #e0e0e0;">Sticky nav</strong> &mdash; follows you as you scroll, highlights current section</li>
+    <li><strong style="color: #e0e0e0;">Parallax background</strong> &mdash; sun, grid, mountains move at different scroll speeds (CSS transform only)</li>
+    <li><strong style="color: #e0e0e0;">Stats &rarr; animated counters</strong> &mdash; custom HTML/CSS replaces external images</li>
+    <li><strong style="color: #e0e0e0;">Skills &rarr; grouped tag cloud</strong> &mdash; compact, categorized, replaces the heavy progress-bar cards</li>
+    <li><strong style="color: #e0e0e0;">Scroll-triggered animations</strong> &mdash; sections fade/slide in via IntersectionObserver</li>
+  </ul>
+</div>

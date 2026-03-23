@@ -193,6 +193,31 @@ function initNavHighlight() {
 }
 
 // ========================================
+// Starfield Generator
+// ========================================
+
+function initStarfield() {
+    const layers = [
+        { selector: '.stars-small', count: 600, spread: 2000 },
+        { selector: '.stars-medium', count: 200, spread: 2000 },
+        { selector: '.stars-large', count: 80, spread: 2000 },
+    ];
+
+    layers.forEach(({ selector, count, spread }) => {
+        const el = document.querySelector(selector);
+        if (!el) return;
+        const shadows = [];
+        for (let i = 0; i < count; i++) {
+            const x = Math.floor(Math.random() * spread);
+            const y = Math.floor(Math.random() * spread * 2);
+            const opacity = (Math.random() * 0.5 + 0.5).toFixed(2);
+            shadows.push(`${x}px ${y}px rgba(255,255,255,${opacity})`);
+        }
+        el.style.boxShadow = shadows.join(',');
+    });
+}
+
+// ========================================
 // Parallax Background
 // ========================================
 
@@ -200,15 +225,13 @@ function initParallax() {
     if (window.innerWidth <= 768) return;
 
     const sun = document.querySelector('.sun');
-    const mountains = document.querySelector('.mountains');
     let ticking = false;
 
     window.addEventListener('scroll', () => {
         if (!ticking) {
             requestAnimationFrame(() => {
                 const scrolled = window.scrollY;
-                if (sun) sun.style.transform = `translateX(-50%) translateY(${scrolled * 0.3}px)`;
-                if (mountains) mountains.style.transform = `translateY(${scrolled * 0.15}px)`;
+                if (sun) sun.style.transform = `translateX(-50%) translateY(${scrolled * 0.2}px)`;
                 ticking = false;
             });
             ticking = true;
@@ -342,6 +365,24 @@ function typeTerminalLines(container) {
 }
 
 // ========================================
+// Fluid Sticky Nav
+// ========================================
+
+function initFluidNav() {
+    const nav = document.getElementById('stickyNav');
+    const hero = document.querySelector('.hero');
+    if (!nav || !hero) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            nav.classList.toggle('scrolled', !entry.isIntersecting);
+        });
+    }, { threshold: 0, rootMargin: '-60px 0px 0px 0px' });
+
+    observer.observe(hero);
+}
+
+// ========================================
 // Konami Code Easter Egg
 // ========================================
 
@@ -399,6 +440,7 @@ function activateEasterEgg() {
 // ========================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    initStarfield();
     renderProjects();
     renderSkills();
     initScrollReveal();
@@ -407,5 +449,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initStatCounters();
     initTerminalTyping();
     initKonamiCode();
+    initFluidNav();
     fetchGitHubData();
 });

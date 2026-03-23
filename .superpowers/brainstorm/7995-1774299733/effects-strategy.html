@@ -1,0 +1,100 @@
+<h2>Effects & Animation Strategy</h2>
+<p class="subtitle">Every effect GPU-accelerated. No JS canvas, no DOM thrashing.</p>
+
+<div style="max-width: 800px; margin: 0 auto;">
+
+  <!-- What's removed -->
+  <div style="background: rgba(255,50,50,0.08); border: 1px solid rgba(255,80,80,0.3); border-radius: 8px; padding: 1.2rem; margin-bottom: 1.5rem;">
+    <h3 style="color: #ff6b6b; margin-bottom: 0.8rem;">Removed (Performance Killers)</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem;">
+      <div style="color: #b0b0b0;"><span style="color: #ff6b6b;">&#10005;</span> Matrix rain (JS canvas loop, ~60fps CPU)</div>
+      <div style="color: #b0b0b0;"><span style="color: #ff6b6b;">&#10005;</span> Mouse particle trail (DOM create/destroy)</div>
+      <div style="color: #b0b0b0;"><span style="color: #ff6b6b;">&#10005;</span> Scanline overlay (full-screen animation)</div>
+      <div style="color: #b0b0b0;"><span style="color: #ff6b6b;">&#10005;</span> Constant glitch clip-rect (forces repaint)</div>
+      <div style="color: #b0b0b0;"><span style="color: #ff6b6b;">&#10005;</span> 60+ skill bar shimmer animations</div>
+      <div style="color: #b0b0b0;"><span style="color: #ff6b6b;">&#10005;</span> MutationObserver on tab changes</div>
+    </div>
+  </div>
+
+  <!-- What's kept/refined -->
+  <div style="background: rgba(0,217,255,0.06); border: 1px solid rgba(0,217,255,0.3); border-radius: 8px; padding: 1.2rem; margin-bottom: 1.5rem;">
+    <h3 style="color: #00d9ff; margin-bottom: 0.8rem;">Kept & Refined</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem;">
+      <div style="color: #b0b0b0;"><span style="color: #00d9ff;">&#10003;</span> Vaporwave background (sun, grid, mountains)</div>
+      <div style="color: #b0b0b0;"><span style="color: #00d9ff;">&#10003;</span> Neon glow on title (simplified, CSS only)</div>
+      <div style="color: #b0b0b0;"><span style="color: #00d9ff;">&#10003;</span> Terminal card in About section</div>
+      <div style="color: #b0b0b0;"><span style="color: #00d9ff;">&#10003;</span> Neon button hover effects</div>
+      <div style="color: #b0b0b0;"><span style="color: #00d9ff;">&#10003;</span> Konami code easter egg</div>
+      <div style="color: #b0b0b0;"><span style="color: #00d9ff;">&#10003;</span> Color palette (pink, blue, purple, yellow)</div>
+    </div>
+  </div>
+
+  <!-- What's new -->
+  <div style="background: rgba(255,110,199,0.06); border: 1px solid rgba(255,110,199,0.3); border-radius: 8px; padding: 1.2rem; margin-bottom: 1.5rem;">
+    <h3 style="color: #ff6ec7; margin-bottom: 0.8rem;">New Effects (All GPU-Friendly)</h3>
+
+    <div style="display: flex; flex-direction: column; gap: 1rem;">
+
+      <div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 1rem;">
+        <div style="color: #ff6ec7; font-weight: bold; margin-bottom: 0.4rem;">1. Scroll-Triggered Section Reveals</div>
+        <div style="color: #b0b0b0; font-size: 0.85rem;">Each section fades up + slides in when it enters viewport. Uses <code style="color: #00d9ff;">IntersectionObserver</code> + CSS <code style="color: #00d9ff;">transform/opacity</code> transitions. Zero layout thrash.</div>
+      </div>
+
+      <div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 1rem;">
+        <div style="color: #ff6ec7; font-weight: bold; margin-bottom: 0.4rem;">2. Parallax Background Layers</div>
+        <div style="color: #b0b0b0; font-size: 0.85rem;">Sun, grid, and mountains move at different speeds on scroll. Pure <code style="color: #00d9ff;">transform: translateY()</code> -- composited on GPU, no repaints. Throttled via <code style="color: #00d9ff;">requestAnimationFrame</code>.</div>
+      </div>
+
+      <div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 1rem;">
+        <div style="color: #ff6ec7; font-weight: bold; margin-bottom: 0.4rem;">3. CSS @property Gradient Animations</div>
+        <div style="color: #b0b0b0; font-size: 0.85rem;">Smooth color-cycling on borders and backgrounds using registered custom properties. The nav underline, card borders, and section dividers subtly shift through the neon palette. Pure CSS, no JS.</div>
+      </div>
+
+      <div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 1rem;">
+        <div style="color: #ff6ec7; font-weight: bold; margin-bottom: 0.4rem;">4. Glitch on Hover (Not Constant)</div>
+        <div style="color: #b0b0b0; font-size: 0.85rem;">The title glitch effect only fires on <code style="color: #00d9ff;">:hover</code> instead of running forever. Dramatic when triggered, zero cost at rest. Uses CSS <code style="color: #00d9ff;">clip-path</code> (GPU composited) instead of deprecated <code style="color: #00d9ff;">clip: rect()</code>.</div>
+      </div>
+
+      <div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 1rem;">
+        <div style="color: #ff6ec7; font-weight: bold; margin-bottom: 0.4rem;">5. Animated Stat Counters</div>
+        <div style="color: #b0b0b0; font-size: 0.85rem;">Numbers count up from 0 when the stats section scrolls into view. Uses <code style="color: #00d9ff;">CSS @property</code> with <code style="color: #00d9ff;">counter()</code> for pure-CSS counters, or a lightweight JS fallback. Fires once, not in a loop.</div>
+      </div>
+
+      <div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 1rem;">
+        <div style="color: #ff6ec7; font-weight: bold; margin-bottom: 0.4rem;">6. Project Card Hover Glow</div>
+        <div style="color: #b0b0b0; font-size: 0.85rem;">Cards get a neon glow <code style="color: #00d9ff;">box-shadow</code> + subtle <code style="color: #00d9ff;">scale(1.02)</code> on hover. The border color shifts via CSS transition. Interactive feel, zero idle cost.</div>
+      </div>
+
+      <div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 1rem;">
+        <div style="color: #ff6ec7; font-weight: bold; margin-bottom: 0.4rem;">7. Typing Effect in Terminal</div>
+        <div style="color: #b0b0b0; font-size: 0.85rem;">When the About section scrolls into view, terminal lines type out one by one. Lightweight JS with <code style="color: #00d9ff;">requestAnimationFrame</code>, fires once. Blinking cursor is pure CSS.</div>
+      </div>
+
+      <div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 1rem;">
+        <div style="color: #ff6ec7; font-weight: bold; margin-bottom: 0.4rem;">8. Subtle Grid Drift</div>
+        <div style="color: #b0b0b0; font-size: 0.85rem;">The perspective grid in the background slowly drifts upward via CSS <code style="color: #00d9ff;">@keyframes</code> on <code style="color: #00d9ff;">transform: translateY</code>. Kept from current site but simplified -- single property animation, GPU composited.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Performance budget -->
+  <div style="background: rgba(255,234,0,0.06); border: 1px solid rgba(255,234,0,0.3); border-radius: 8px; padding: 1.2rem;">
+    <h3 style="color: #ffea00; margin-bottom: 0.8rem;">Performance Budget</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; text-align: center;">
+      <div>
+        <div style="font-size: 1.8rem; color: #00d9ff; font-weight: bold;">&lt;50KB</div>
+        <div style="font-size: 0.8rem; color: #8b949e;">Total page weight<br>(HTML + CSS + JS)</div>
+      </div>
+      <div>
+        <div style="font-size: 1.8rem; color: #ff6ec7; font-weight: bold;">0</div>
+        <div style="font-size: 0.8rem; color: #8b949e;">External dependencies<br>(no libraries)</div>
+      </div>
+      <div>
+        <div style="font-size: 1.8rem; color: #ffea00; font-weight: bold;">60fps</div>
+        <div style="font-size: 0.8rem; color: #8b949e;">All animations<br>(GPU composited)</div>
+      </div>
+    </div>
+  </div>
+
+</div>
