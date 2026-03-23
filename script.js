@@ -1,4 +1,4 @@
-import { initBackground } from './blackhole.js';
+'use strict';
 
 // ========================================
 // Static Data
@@ -193,22 +193,65 @@ function initNavHighlight() {
 }
 
 // ========================================
-// Three.js Background + Scroll Control
+// Starfield Generator
+// ========================================
+
+function initStarfield() {
+    const starColors = [
+        'rgba(255,255,255,',      // white
+        'rgba(200,220,255,',      // cool blue-white
+        'rgba(255,230,200,',      // warm white
+        'rgba(180,200,255,',      // blue
+        'rgba(255,200,200,',      // pinkish
+    ];
+
+    const layers = [
+        { selector: '.stars-small', count: 700, spread: 2000 },
+        { selector: '.stars-medium', count: 250, spread: 2000 },
+        { selector: '.stars-large', count: 100, spread: 2000 },
+    ];
+
+    layers.forEach(({ selector, count, spread }) => {
+        const el = document.querySelector(selector);
+        if (!el) return;
+        const shadows = [];
+        for (let i = 0; i < count; i++) {
+            const x = Math.floor(Math.random() * spread);
+            const y = Math.floor(Math.random() * spread * 2);
+            const opacity = (Math.random() * 0.5 + 0.5).toFixed(2);
+            const color = starColors[Math.floor(Math.random() * starColors.length)];
+            shadows.push(`${x}px ${y}px ${color}${opacity})`);
+        }
+        el.style.boxShadow = shadows.join(',');
+    });
+}
+
+// ========================================
+// Parallax Background
 // ========================================
 
 function initParallax() {
-    const canvas = document.getElementById('bgCanvas');
-    const bg = canvas ? initBackground(canvas) : null;
+    if (window.innerWidth <= 768) return;
+
+    const sun = document.querySelector('.sun');
+    const horizonGlow = document.querySelector('.horizon-glow');
+    const starsSmall = document.querySelector('.stars-small');
+    const starsMedium = document.querySelector('.stars-medium');
+    const starsLarge = document.querySelector('.stars-large');
     let ticking = false;
-    const heroHeight = window.innerHeight;
 
     window.addEventListener('scroll', () => {
         if (!ticking) {
             requestAnimationFrame(() => {
                 const scrolled = window.scrollY;
-                const bhProgress = Math.min(scrolled / (heroHeight * 0.65), 1);
-                const eased = bhProgress * bhProgress * (3 - 2 * bhProgress);
-                if (bg) bg.setProgress(eased);
+                // Sun sinks slowly as you scroll
+                if (sun) sun.style.transform = `translate(-50%, -50%) translateY(${scrolled * 0.35}px)`;
+                // Glow follows sun
+                if (horizonGlow) horizonGlow.style.transform = `translateX(-50%) translateY(${scrolled * 0.25}px)`;
+                // Stars move at different rates for depth
+                if (starsSmall) starsSmall.style.marginTop = `${scrolled * -0.05}px`;
+                if (starsMedium) starsMedium.style.marginTop = `${scrolled * -0.1}px`;
+                if (starsLarge) starsLarge.style.marginTop = `${scrolled * -0.15}px`;
                 ticking = false;
             });
             ticking = true;
@@ -506,6 +549,7 @@ function activateEasterEgg() {
 // ========================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    initStarfield();
     renderProjects();
     renderSkills();
     initScrollReveal();
