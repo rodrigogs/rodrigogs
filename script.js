@@ -410,29 +410,118 @@ function initKonamiCode() {
 }
 
 function activateEasterEgg() {
+    // Full-screen overlay
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed; inset: 0; z-index: 9998;
+        background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,0.7) 100%);
+        pointer-events: none; opacity: 0;
+        transition: opacity 0.3s ease;
+    `;
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => { overlay.style.opacity = '1'; });
+
+    // Scanline overlay
+    const scanlines = document.createElement('div');
+    scanlines.style.cssText = `
+        position: fixed; inset: 0; z-index: 9999;
+        background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,217,255,0.03) 2px, rgba(0,217,255,0.03) 4px);
+        pointer-events: none; animation: konamiScanlines 0.1s steps(2) infinite;
+    `;
+    document.body.appendChild(scanlines);
+
+    // Neon glitch lines shooting across screen
+    const colors = ['#ff6ec7', '#00d9ff', '#bd00ff', '#ffea00'];
+    for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+            const line = document.createElement('div');
+            const isHorizontal = Math.random() > 0.3;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const size = Math.random() * 60 + 20;
+            if (isHorizontal) {
+                line.style.cssText = `
+                    position: fixed; z-index: 10000; pointer-events: none;
+                    top: ${Math.random() * 100}vh; left: -10%;
+                    width: ${size}vw; height: 2px;
+                    background: linear-gradient(90deg, transparent, ${color}, transparent);
+                    box-shadow: 0 0 8px ${color}, 0 0 20px ${color};
+                    animation: konamiLineH 0.4s ease-out forwards;
+                `;
+            } else {
+                line.style.cssText = `
+                    position: fixed; z-index: 10000; pointer-events: none;
+                    left: ${Math.random() * 100}vw; top: -10%;
+                    height: ${size}vh; width: 2px;
+                    background: linear-gradient(180deg, transparent, ${color}, transparent);
+                    box-shadow: 0 0 8px ${color}, 0 0 20px ${color};
+                    animation: konamiLineV 0.4s ease-out forwards;
+                `;
+            }
+            document.body.appendChild(line);
+            setTimeout(() => line.remove(), 500);
+        }, i * 80);
+    }
+
+    // Main message with glitch effect
     const msg = document.createElement('div');
     msg.style.cssText = `
-        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        position: fixed; top: 50%; left: 50%; z-index: 10001;
+        transform: translate(-50%, -50%) scale(0);
         background: linear-gradient(135deg, rgba(255,110,199,0.95), rgba(189,0,255,0.95));
-        color: #010409; padding: 2rem 4rem; font-size: 2rem; font-weight: 900;
-        border-radius: 8px; z-index: 9999; font-family: 'Orbitron', sans-serif;
+        color: #010409; padding: 2rem 4rem; font-size: 2.5rem; font-weight: 900;
+        border-radius: 12px; font-family: 'Orbitron', sans-serif;
         letter-spacing: 0.3rem; text-transform: uppercase;
-        box-shadow: 0 0 40px #ff6ec7, 0 0 80px #bd00ff;
+        box-shadow: 0 0 60px #ff6ec7, 0 0 120px #bd00ff, inset 0 0 30px rgba(255,255,255,0.2);
         border: 3px solid #00d9ff;
+        animation: konamiMsgIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
+        text-shadow: 0 0 10px rgba(0,0,0,0.3);
     `;
     msg.textContent = 'KONAMI CODE ACTIVATED!';
     document.body.appendChild(msg);
 
+    // Rainbow hue-rotate on body
     document.body.style.animation = 'none';
     requestAnimationFrame(() => {
-        document.body.style.animation = 'konamiFlash 2s ease-out';
+        document.body.style.animation = 'konamiFlash 3s ease-out';
     });
 
+    // Spawn neon particles from center
     setTimeout(() => {
-        msg.style.transition = 'opacity 1s';
+        for (let i = 0; i < 40; i++) {
+            const particle = document.createElement('div');
+            const angle = (i / 40) * Math.PI * 2;
+            const dist = Math.random() * 300 + 100;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const size = Math.random() * 6 + 2;
+            particle.style.cssText = `
+                position: fixed; z-index: 10001; pointer-events: none;
+                top: 50%; left: 50%; width: ${size}px; height: ${size}px;
+                background: ${color}; border-radius: 50%;
+                box-shadow: 0 0 6px ${color}, 0 0 12px ${color};
+                transform: translate(-50%, -50%);
+                animation: konamiParticle 1s cubic-bezier(0, 0.5, 0.5, 1) forwards;
+                --px: ${Math.cos(angle) * dist}px;
+                --py: ${Math.sin(angle) * dist}px;
+            `;
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), 1200);
+        }
+    }, 600);
+
+    // Cleanup
+    setTimeout(() => {
+        msg.style.transition = 'all 0.8s ease';
+        msg.style.transform = 'translate(-50%, -50%) scale(0) rotate(10deg)';
         msg.style.opacity = '0';
-        setTimeout(() => msg.remove(), 1000);
-    }, 3000);
+        overlay.style.opacity = '0';
+        scanlines.style.opacity = '0';
+        scanlines.style.transition = 'opacity 0.5s';
+        setTimeout(() => {
+            msg.remove();
+            overlay.remove();
+            scanlines.remove();
+        }, 1000);
+    }, 3500);
 }
 
 // ========================================
