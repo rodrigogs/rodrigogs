@@ -631,3 +631,44 @@ body {
     80% { clip-path: inset(10% 0 40% 0); transform: translate(-2px, 1px); }
     100% { clip-path: inset(0 0 80% 0); transform: translate(2px, -1px); }
 }
+
+/* ========================================
+   @property Gradient Animations
+   Fallback: static gradient border (no animation)
+   ======================================== */
+@property --gradient-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes rotateGradient {
+    to { --gradient-angle: 360deg; }
+}
+
+.card {
+    border: 2px solid transparent;
+    background:
+        linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+        linear-gradient(var(--gradient-angle), var(--neon-pink), var(--neon-blue), var(--neon-purple)) border-box;
+    animation: rotateGradient 6s linear infinite;
+}
+
+.stat-card {
+    border: 2px solid transparent;
+    background:
+        linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)) padding-box,
+        linear-gradient(var(--gradient-angle), var(--neon-purple), var(--neon-pink), var(--neon-blue)) border-box;
+    animation: rotateGradient 6s linear infinite;
+}
+
+/* ========================================
+   Konami Easter Egg
+   ======================================== */
+@keyframes konamiFlash {
+    0% { filter: hue-rotate(0deg) brightness(1); }
+    25% { filter: hue-rotate(90deg) brightness(1.2); }
+    50% { filter: hue-rotate(180deg) brightness(1); }
+    75% { filter: hue-rotate(270deg) brightness(1.2); }
+    100% { filter: hue-rotate(360deg) brightness(1); }
+}
