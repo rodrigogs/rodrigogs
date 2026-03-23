@@ -167,7 +167,7 @@ body {
     height: 18px;
 }
 
-/* Black hole canvas - overlays the sun as you scroll */
+/* Black hole WebGL canvas - overlays the sun as you scroll */
 .blackhole-canvas {
     position: absolute;
     top: 30%;
@@ -179,6 +179,13 @@ body {
     z-index: 2;
     pointer-events: none;
     will-change: opacity, transform;
+}
+
+@media (max-width: 768px) {
+    .blackhole-canvas {
+        width: 350px;
+        height: 350px;
+    }
 }
 
 /* Ambient glow behind the sun */

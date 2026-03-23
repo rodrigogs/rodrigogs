@@ -227,12 +227,179 @@ function initStarfield() {
 }
 
 // ========================================
-// Parallax + Black Hole Canvas
+// Parallax + WebGL Black Hole Shader
 // ========================================
 
-function initParallax() {
-    if (window.innerWidth <= 768) return;
+const BLACKHOLE_VERT = `
+attribute vec2 a_position;
+void main() { gl_Position = vec4(a_position, 0.0, 1.0); }
+`;
 
+const BLACKHOLE_FRAG = `
+precision highp float;
+uniform vec2 u_resolution;
+uniform float u_time;
+uniform float u_progress; // 0 = sun, 1 = full black hole
+
+#define PI 3.14159265
+#define RS 0.22  // Schwarzschild radius
+
+// Disk color: hot inner (white-yellow), warm middle (orange), cool outer (red-brown)
+vec3 diskColor(float r, float angle) {
+    float t = smoothstep(RS * 1.5, 0.9, r);
+    vec3 hot = vec3(1.0, 0.95, 0.8);
+    vec3 warm = vec3(1.0, 0.5, 0.15);
+    vec3 cool = vec3(0.6, 0.1, 0.02);
+    vec3 col = mix(hot, warm, smoothstep(0.0, 0.5, t));
+    col = mix(col, cool, smoothstep(0.4, 1.0, t));
+    // Brightness varies with angle (doppler-like)
+    float doppler = 0.7 + 0.3 * sin(angle * 3.0 + u_time * 0.5);
+    // Brighter closer to the black hole
+    float brightness = (1.0 - t) * 2.0 + 0.3;
+    return col * brightness * doppler;
+}
+
+void main() {
+    vec2 uv = (gl_FragCoord.xy - u_resolution * 0.5) / min(u_resolution.x, u_resolution.y) * 2.0;
+    float r = length(uv);
+    float angle = atan(uv.y, uv.x);
+    float progress = u_progress;
+
+    // Gravitational lensing strength scales with progress
+    float gravity = progress * 1.5;
+
+    // Ray direction (simplified - deflect toward center based on gravity)
+    vec2 dir = normalize(uv);
+    float deflection = gravity * RS * RS / max(r * r, 0.001);
+    vec2 lensedUV = uv + dir * deflection;
+    float lensedR = length(lensedUV);
+    float lensedAngle = atan(lensedUV.y, lensedUV.x);
+
+    vec3 color = vec3(0.0);
+    float alpha = 0.0;
+
+    // Event horizon radius scales with progress
+    float eventHorizon = RS * progress;
+
+    // === ACCRETION DISK (in the horizontal plane, viewed at angle) ===
+    // The disk is in the y=0 plane, we're viewing from above at ~15 degrees
+    // Project: disk appears as a thin band around the equator
+    float viewAngle = 0.25; // tilt angle
+    float diskY = lensedUV.y / max(lensedR, 0.01);
+    float diskPlane = abs(diskY - 0.0) / (1.0 + viewAngle);
+
+    // Main disk band (horizontal)
+    float diskThickness = 0.08 + 0.15 * (1.0 - progress * 0.5);
+    float diskMask = smoothstep(diskThickness, diskThickness * 0.3, diskPlane);
+    float diskR = lensedR;
+    if (diskMask > 0.0 && diskR > eventHorizon * 1.3 && diskR < 0.95) {
+        vec3 dc = diskColor(diskR, lensedAngle + u_time * 0.3);
+        color += dc * diskMask * progress;
+        alpha = max(alpha, diskMask * progress);
+    }
+
+    // === GRAVITATIONAL LENSING: light from back of disk bent over top/bottom ===
+    // This creates the vertical ring effect (the Interstellar signature)
+    float lensingStrength = progress;
+    if (lensingStrength > 0.1) {
+        // Light from behind bends over poles
+        float poleY = abs(uv.y);
+        float poleX = abs(uv.x);
+        // Vertical ring: narrow in x, extends in y, at radius ~ event horizon
+        float ringDist = abs(poleX) - eventHorizon * 0.3;
+        float ringMask = smoothstep(0.06, 0.0, abs(ringDist)) * smoothstep(eventHorizon * 0.5, eventHorizon * 1.5, poleY) * smoothstep(0.9, eventHorizon * 2.0, poleY);
+        if (r > eventHorizon && ringMask > 0.01) {
+            float rt = 1.0 - smoothstep(eventHorizon, 0.7, r);
+            vec3 lensedColor = diskColor(r * 1.5, angle + PI * 0.5 + u_time * 0.2) * 0.8;
+            color += lensedColor * ringMask * lensingStrength;
+            alpha = max(alpha, ringMask * lensingStrength * 0.8);
+        }
+    }
+
+    // === PHOTON SPHERE (bright thin ring just outside event horizon) ===
+    float photonR = eventHorizon * 1.1 + 0.01;
+    float photonRing = smoothstep(0.015, 0.0, abs(r - photonR)) * progress;
+    if (photonRing > 0.0) {
+        vec3 photonColor = vec3(0.9, 0.95, 1.0) * 2.0;
+        color += photonColor * photonRing;
+        alpha = max(alpha, photonRing);
+    }
+
+    // === INNER GLOW (just outside event horizon) ===
+    float innerGlow = smoothstep(eventHorizon * 2.0, eventHorizon, r) * progress;
+    if (innerGlow > 0.0 && r > eventHorizon) {
+        vec3 glowCol = vec3(0.8, 0.6, 0.3) * innerGlow * 0.5;
+        color += glowCol;
+        alpha = max(alpha, innerGlow * 0.4);
+    }
+
+    // === EVENT HORIZON (absolute black) ===
+    if (r < eventHorizon) {
+        color = vec3(0.0);
+        alpha = progress;
+    }
+
+    // === OUTER GLOW (ambient light around the whole thing) ===
+    float outerGlow = smoothstep(0.8, 0.2, r) * 0.15 * progress;
+    color += vec3(0.4, 0.2, 0.6) * outerGlow;
+    alpha = max(alpha, outerGlow);
+
+    // Output
+    gl_FragColor = vec4(color, alpha);
+}
+`;
+
+function initBlackHoleShader() {
+    const canvas = document.getElementById('blackholeCanvas');
+    if (!canvas) return null;
+
+    const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false });
+    if (!gl) return null;
+
+    // Size
+    const SIZE = window.innerWidth <= 768 ? 350 : 600;
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = SIZE * DPR;
+    canvas.height = SIZE * DPR;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+
+    // Compile shaders
+    function compileShader(src, type) {
+        const s = gl.createShader(type);
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        return s;
+    }
+
+    const vs = compileShader(BLACKHOLE_VERT, gl.VERTEX_SHADER);
+    const fs = compileShader(BLACKHOLE_FRAG, gl.FRAGMENT_SHADER);
+    const program = gl.createProgram();
+    gl.attachShader(program, vs);
+    gl.attachShader(program, fs);
+    gl.linkProgram(program);
+    gl.useProgram(program);
+
+    // Full-screen quad
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+    const aPos = gl.getAttribLocation(program, 'a_position');
+    gl.enableVertexAttribArray(aPos);
+    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+    // Uniforms
+    const uRes = gl.getUniformLocation(program, 'u_resolution');
+    const uTime = gl.getUniformLocation(program, 'u_time');
+    const uProgress = gl.getUniformLocation(program, 'u_progress');
+
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+    return { gl, uTime, uProgress };
+}
+
+function initParallax() {
     const sun = document.querySelector('.sun');
     const horizonGlow = document.querySelector('.horizon-glow');
     const starsSmall = document.querySelector('.stars-small');
@@ -240,176 +407,63 @@ function initParallax() {
     const starsLarge = document.querySelector('.stars-large');
     const sunSlices = document.querySelectorAll('.sun-slice');
     const canvas = document.getElementById('blackholeCanvas');
-    const ctx = canvas ? canvas.getContext('2d') : null;
+    const isMobile = window.innerWidth <= 768;
 
-    // Set canvas resolution
-    const SIZE = 600;
-    const DPR = Math.min(window.devicePixelRatio || 1, 2);
-    if (canvas) {
-        canvas.width = SIZE * DPR;
-        canvas.height = SIZE * DPR;
-        ctx.scale(DPR, DPR);
-    }
-
+    // Init WebGL shader
+    const shader = initBlackHoleShader();
     let ticking = false;
-    let rotation = 0;
+    let animating = false;
+    let currentProgress = 0;
     const heroHeight = window.innerHeight;
 
-    // Black hole render function
-    function drawBlackHole(progress) {
-        if (!ctx) return;
-        ctx.clearRect(0, 0, SIZE, SIZE);
-
-        const cx = SIZE / 2;
-        const cy = SIZE / 2;
-        const bhRadius = 60 + progress * 20;
-        const photonRadius = bhRadius + 8;
-        const diskOuter = 250;
-        const diskInner = bhRadius + 20;
-        const time = rotation;
-
-        // --- Accretion disk (drawn as ellipse behind the black hole) ---
-        // Bottom half of disk (behind)
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.scale(1, 0.3); // flatten to ellipse
-        for (let r = diskOuter; r > diskInner; r -= 1.5) {
-            const t = (r - diskInner) / (diskOuter - diskInner);
-            const angle = time + t * 2;
-            const brightness = 0.3 + 0.7 * Math.pow(1 - t, 2);
-            // Color varies: warm inside, cool outside
-            const red = Math.round(255 * brightness);
-            const green = Math.round((120 + 80 * t) * brightness);
-            const blue = Math.round((180 + 75 * t) * brightness);
-            ctx.beginPath();
-            // Draw bottom arc only
-            ctx.arc(0, 0, r, 0, Math.PI);
-            ctx.strokeStyle = `rgba(${red}, ${green}, ${blue}, ${brightness * progress * 0.6})`;
-            ctx.lineWidth = 2;
-            ctx.stroke();
-        }
-        ctx.restore();
-
-        // --- Gravitational lensing ring (vertical light bending over the top) ---
-        ctx.save();
-        ctx.translate(cx, cy);
-        for (let r = bhRadius + 5; r < bhRadius + 50; r += 1.5) {
-            const t = (r - bhRadius - 5) / 45;
-            const brightness = Math.pow(1 - t, 3);
-            const red = Math.round(255 * brightness);
-            const green = Math.round((200 + 55 * t) * brightness);
-            const blue = Math.round((180 + 75 * t) * brightness);
-            ctx.beginPath();
-            ctx.ellipse(0, 0, r * 0.15, r, 0, Math.PI * 1.05, Math.PI * 1.95);
-            ctx.strokeStyle = `rgba(${red}, ${green}, ${blue}, ${brightness * progress * 0.5})`;
-            ctx.lineWidth = 1.5;
-            ctx.stroke();
-        }
-        ctx.restore();
-
-        // --- Top half of accretion disk (in front of black hole) ---
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.scale(1, 0.3);
-        for (let r = diskOuter; r > diskInner; r -= 1.5) {
-            const t = (r - diskInner) / (diskOuter - diskInner);
-            const angle = time + t * 2;
-            const brightness = 0.4 + 0.6 * Math.pow(1 - t, 1.5);
-            // Slightly brighter/different color for front
-            const red = Math.round(255 * brightness);
-            const green = Math.round((140 + 60 * t) * brightness);
-            const blue = Math.round((200 + 55 * t) * brightness);
-            ctx.beginPath();
-            ctx.arc(0, 0, r, Math.PI, Math.PI * 2);
-            ctx.strokeStyle = `rgba(${red}, ${green}, ${blue}, ${brightness * progress * 0.8})`;
-            ctx.lineWidth = 2;
-            ctx.stroke();
-        }
-        ctx.restore();
-
-        // --- Event horizon (pitch black) ---
-        ctx.beginPath();
-        ctx.arc(cx, cy, bhRadius, 0, Math.PI * 2);
-        ctx.fillStyle = '#000';
-        ctx.fill();
-
-        // --- Photon ring (thin, intense bright ring) ---
-        for (let i = 0; i < 4; i++) {
-            ctx.beginPath();
-            ctx.arc(cx, cy, photonRadius + i * 1.5, 0, Math.PI * 2);
-            const alpha = (1 - i * 0.25) * progress;
-            ctx.strokeStyle = `rgba(220, 240, 255, ${alpha * 0.7})`;
-            ctx.lineWidth = 1.5 - i * 0.3;
-            ctx.stroke();
-        }
-
-        // --- Photon ring glow ---
-        const glowGrad = ctx.createRadialGradient(cx, cy, bhRadius, cx, cy, photonRadius + 25);
-        glowGrad.addColorStop(0, `rgba(200, 220, 255, 0)`);
-        glowGrad.addColorStop(0.5, `rgba(200, 220, 255, ${0.15 * progress})`);
-        glowGrad.addColorStop(0.8, `rgba(150, 180, 255, ${0.08 * progress})`);
-        glowGrad.addColorStop(1, 'rgba(100, 150, 255, 0)');
-        ctx.beginPath();
-        ctx.arc(cx, cy, photonRadius + 25, 0, Math.PI * 2);
-        ctx.fillStyle = glowGrad;
-        ctx.fill();
-
-        // --- Outer glow / gravitational distortion halo ---
-        const outerGlow = ctx.createRadialGradient(cx, cy, photonRadius, cx, cy, diskOuter + 30);
-        outerGlow.addColorStop(0, `rgba(180, 140, 255, ${0.08 * progress})`);
-        outerGlow.addColorStop(0.5, `rgba(255, 110, 199, ${0.04 * progress})`);
-        outerGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        ctx.beginPath();
-        ctx.arc(cx, cy, diskOuter + 30, 0, Math.PI * 2);
-        ctx.fillStyle = outerGlow;
-        ctx.fill();
+    // Render loop
+    function renderLoop(time) {
+        if (!animating || !shader) return;
+        const { gl, uTime, uProgress } = shader;
+        gl.uniform1f(uTime, time * 0.001);
+        gl.uniform1f(uProgress, currentProgress);
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        requestAnimationFrame(renderLoop);
     }
-
-    // Animation loop for disk rotation (only when visible)
-    let animating = false;
-    function animateBlackHole() {
-        if (!animating) return;
-        rotation += 0.005;
-        drawBlackHole(currentProgress);
-        requestAnimationFrame(animateBlackHole);
-    }
-
-    let currentProgress = 0;
 
     window.addEventListener('scroll', () => {
         if (!ticking) {
             requestAnimationFrame(() => {
                 const scrolled = window.scrollY;
-                const bhProgress = Math.min(scrolled / (heroHeight * 0.6), 1);
+                const bhProgress = Math.min(scrolled / (heroHeight * 0.65), 1);
                 const eased = bhProgress * bhProgress * (3 - 2 * bhProgress);
                 currentProgress = eased;
 
-                // Sun: fade out as black hole fades in
+                // Sun fades out
                 if (sun) {
-                    sun.style.transform = `translate(-50%, -50%) translateY(${scrolled * 0.25}px)`;
-                    sun.style.opacity = Math.max(0, 1 - eased * 2);
+                    sun.style.transform = `translate(-50%, -50%) translateY(${isMobile ? 0 : scrolled * 0.25}px)`;
+                    sun.style.opacity = Math.max(0, 1 - eased * 2.5);
                 }
                 sunSlices.forEach(s => { s.style.opacity = Math.max(0, 1 - eased * 3); });
 
-                // Canvas: fade in and follow sun position
+                // Canvas fades in
                 if (canvas) {
-                    canvas.style.opacity = Math.min(1, eased * 1.5);
-                    canvas.style.transform = `translate(-50%, -50%) translateY(${scrolled * 0.25}px)`;
-                    // Start/stop animation loop
-                    if (eased > 0.05 && !animating) {
+                    canvas.style.opacity = Math.min(1, eased * 2);
+                    if (!isMobile) {
+                        canvas.style.transform = `translate(-50%, -50%) translateY(${scrolled * 0.25}px)`;
+                    }
+                    if (eased > 0.02 && !animating) {
                         animating = true;
-                        animateBlackHole();
-                    } else if (eased <= 0.05) {
+                        requestAnimationFrame(renderLoop);
+                    } else if (eased <= 0.02) {
                         animating = false;
                     }
                 }
 
-                // Glow follows sun
-                if (horizonGlow) horizonGlow.style.transform = `translateX(-50%) translateY(${scrolled * 0.2}px)`;
-                // Stars parallax depth
-                if (starsSmall) starsSmall.style.marginTop = `${scrolled * -0.05}px`;
-                if (starsMedium) starsMedium.style.marginTop = `${scrolled * -0.1}px`;
-                if (starsLarge) starsLarge.style.marginTop = `${scrolled * -0.15}px`;
+                // Other parallax
+                if (horizonGlow && !isMobile) horizonGlow.style.transform = `translateX(-50%) translateY(${scrolled * 0.2}px)`;
+                if (!isMobile) {
+                    if (starsSmall) starsSmall.style.marginTop = `${scrolled * -0.05}px`;
+                    if (starsMedium) starsMedium.style.marginTop = `${scrolled * -0.1}px`;
+                    if (starsLarge) starsLarge.style.marginTop = `${scrolled * -0.15}px`;
+                }
                 ticking = false;
             });
             ticking = true;
