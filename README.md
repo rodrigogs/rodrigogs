@@ -179,10 +179,6 @@ I'm a passionate **full-stack developer** with over **15 years of experience** b
   <img src="https://streak-stats.demolab.com/?user=rodrigogs&theme=dracula&hide_border=false&background=0D1117&ring=BD00FF&fire=FF6EC7&currStreakLabel=00D9FF" alt="GitHub Streak" />
 </div>
 
-<div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=rodrigogs&theme=dracula&no-frame=false&no-bg=false&margin-w=4&row=1&column=7&cache_seconds=1800" alt="GitHub Trophies" />
-</div>
-
 ---
 
 ### 📈 Contribution Graph
