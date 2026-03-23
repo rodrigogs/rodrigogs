@@ -167,6 +167,73 @@ body {
     height: 18px;
 }
 
+/* Black hole elements - hidden initially, revealed by scroll */
+.event-horizon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0%;
+    height: 0%;
+    border-radius: 50%;
+    background: radial-gradient(circle, #000 0%, #000 70%, transparent 100%);
+    z-index: 5;
+}
+
+.photon-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0%;
+    height: 0%;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    box-shadow: none;
+    z-index: 4;
+}
+
+/* Accretion disk - the main horizontal tilted disk */
+.accretion-disk {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotateX(75deg);
+    width: 0px;
+    height: 0px;
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 2;
+    pointer-events: none;
+    animation: diskSpin 8s linear infinite paused;
+}
+
+@keyframes diskSpin {
+    from { transform: translate(-50%, -50%) rotateX(75deg) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotateX(75deg) rotate(360deg); }
+}
+
+/* Gravitational lensing ring - the vertical ring that makes it look "Interstellar" */
+.lensing-ring {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotateY(0deg);
+    width: 0px;
+    height: 0px;
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    border: 3px solid transparent;
+    animation: lensingGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes lensingGlow {
+    0% { filter: brightness(1); }
+    100% { filter: brightness(1.3); }
+}
+
 /* Ambient glow behind the sun */
 .horizon-glow {
     position: absolute;

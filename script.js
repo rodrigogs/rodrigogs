@@ -238,17 +238,137 @@ function initParallax() {
     const starsSmall = document.querySelector('.stars-small');
     const starsMedium = document.querySelector('.stars-medium');
     const starsLarge = document.querySelector('.stars-large');
+    const eventHorizon = document.querySelector('.event-horizon');
+    const photonRing = document.querySelector('.photon-ring');
+    const accretionDisk = document.querySelector('.accretion-disk');
+    const lensingRing = document.querySelector('.lensing-ring');
+    const sunSlices = document.querySelectorAll('.sun-slice');
     let ticking = false;
+
+    // Pre-calculate hero height for black hole transition
+    const heroHeight = window.innerHeight;
 
     window.addEventListener('scroll', () => {
         if (!ticking) {
             requestAnimationFrame(() => {
                 const scrolled = window.scrollY;
-                // Sun sinks slowly as you scroll
-                if (sun) sun.style.transform = `translate(-50%, -50%) translateY(${scrolled * 0.35}px)`;
+                // Black hole transition progress: 0 at top, 1 when scrolled past hero
+                const bhProgress = Math.min(scrolled / (heroHeight * 0.7), 1);
+                // Eased progress for smoother transition
+                const eased = bhProgress * bhProgress * (3 - 2 * bhProgress); // smoothstep
+
+                // Sun parallax + slight shrink as it becomes black hole
+                const scale = 1 - eased * 0.15;
+                if (sun) {
+                    sun.style.transform = `translate(-50%, -50%) translateY(${scrolled * 0.25}px) scale(${scale})`;
+                    // Transition sun gradient to dark with bright edge
+                    const sunBg = eased < 0.5
+                        ? `linear-gradient(to bottom, #ffea00 0%, #ffb800 20%, #ff6ec7 50%, #bd00ff 80%, #6b00b3 100%)`
+                        : `radial-gradient(circle, #000 ${30 + eased * 30}%, #0a0020 ${50 + eased * 15}%, #ff6ec7 ${70 + eased * 10}%, #00d9ff ${85 + eased * 5}%, transparent 100%)`;
+                    sun.style.background = sunBg;
+
+                    // Shift box-shadow from warm glow to photon ring glow
+                    const warmGlow = 1 - eased;
+                    const coldGlow = eased;
+                    sun.style.boxShadow = `
+                        0 0 ${80 + coldGlow * 40}px rgba(${Math.round(255 * warmGlow + 0 * coldGlow)}, ${Math.round(110 * warmGlow + 180 * coldGlow)}, ${Math.round(199 * warmGlow + 255 * coldGlow)}, ${0.6 + coldGlow * 0.2}),
+                        0 0 ${160 + coldGlow * 60}px rgba(${Math.round(189 * warmGlow + 0 * coldGlow)}, ${Math.round(0 * warmGlow + 150 * coldGlow)}, ${Math.round(255 * warmGlow + 255 * coldGlow)}, ${0.4 + coldGlow * 0.1}),
+                        0 0 ${300 + coldGlow * 100}px rgba(${Math.round(255 * warmGlow + 0 * coldGlow)}, ${Math.round(110 * warmGlow + 100 * coldGlow)}, ${Math.round(199 * warmGlow + 255 * coldGlow)}, ${0.2}),
+                        0 0 ${500 + coldGlow * 200}px rgba(${Math.round(189 * warmGlow)}, ${Math.round(0 + 50 * coldGlow)}, ${Math.round(255 * warmGlow + 200 * coldGlow)}, 0.1)
+                    `;
+                }
+
+                // Fade sun slices out
+                sunSlices.forEach(slice => {
+                    slice.style.opacity = Math.max(0, 1 - eased * 2.5);
+                });
+
+                // Event horizon: dark center grows
+                if (eventHorizon) {
+                    const ehSize = eased * 75;
+                    eventHorizon.style.width = `${ehSize}%`;
+                    eventHorizon.style.height = `${ehSize}%`;
+                    eventHorizon.style.opacity = eased;
+                }
+
+                // Photon ring: bright thin ring appears
+                if (photonRing) {
+                    const prSize = eased * 82;
+                    photonRing.style.width = `${prSize}%`;
+                    photonRing.style.height = `${prSize}%`;
+                    photonRing.style.border = `${1 + eased * 2}px solid rgba(200, 230, 255, ${eased * 0.9})`;
+                    photonRing.style.boxShadow = eased > 0.1
+                        ? `0 0 ${eased * 15}px rgba(200, 230, 255, ${eased * 0.8}), 0 0 ${eased * 30}px rgba(0, 217, 255, ${eased * 0.4}), inset 0 0 ${eased * 10}px rgba(200, 230, 255, ${eased * 0.3})`
+                        : 'none';
+                }
+
+                // Accretion disk: tilted glowing ring that spins
+                if (accretionDisk) {
+                    const diskSize = 300 + eased * 300;
+                    const diskOpacity = Math.max(0, (eased - 0.15) * 1.2);
+                    accretionDisk.style.width = `${diskSize}px`;
+                    accretionDisk.style.height = `${diskSize}px`;
+                    accretionDisk.style.opacity = diskOpacity;
+                    accretionDisk.style.top = `calc(30% + ${scrolled * 0.25}px)`;
+                    // Start spinning when visible
+                    accretionDisk.style.animationPlayState = diskOpacity > 0 ? 'running' : 'paused';
+                    if (diskOpacity > 0) {
+                        accretionDisk.style.background = `
+                            radial-gradient(ellipse, transparent 40%, rgba(0,0,0,0.5) 50%, transparent 55%),
+                            conic-gradient(from 0deg,
+                                rgba(255,110,199,0.9),
+                                rgba(0,217,255,0.7),
+                                rgba(255,234,0,0.8),
+                                rgba(189,0,255,0.7),
+                                rgba(255,110,199,0.9),
+                                rgba(0,217,255,0.6),
+                                rgba(255,234,0,0.7),
+                                rgba(189,0,255,0.8),
+                                rgba(255,110,199,0.9)
+                            )
+                        `;
+                        accretionDisk.style.boxShadow = `
+                            0 0 ${40 * diskOpacity}px rgba(255, 110, 199, ${0.5 * diskOpacity}),
+                            0 0 ${80 * diskOpacity}px rgba(0, 217, 255, ${0.3 * diskOpacity}),
+                            0 0 ${120 * diskOpacity}px rgba(189, 0, 255, ${0.2 * diskOpacity}),
+                            inset 0 0 ${50 * diskOpacity}px rgba(0, 0, 0, ${0.6 * diskOpacity})
+                        `;
+                    }
+                }
+
+                // Gravitational lensing ring: vertical ring (Interstellar effect)
+                if (lensingRing) {
+                    const lrSize = 280 + eased * 200;
+                    const lrOpacity = Math.max(0, (eased - 0.3) * 1.4);
+                    lensingRing.style.width = `${lrSize}px`;
+                    lensingRing.style.height = `${lrSize}px`;
+                    lensingRing.style.opacity = lrOpacity;
+                    lensingRing.style.top = `calc(30% + ${scrolled * 0.25}px)`;
+                    if (lrOpacity > 0) {
+                        const ringWidth = 2 + eased * 3;
+                        lensingRing.style.borderWidth = `${ringWidth}px`;
+                        lensingRing.style.borderStyle = 'solid';
+                        lensingRing.style.borderImage = `conic-gradient(from 90deg,
+                            rgba(255,200,100,0.9),
+                            rgba(255,110,199,0.6),
+                            rgba(200,230,255,0.8),
+                            rgba(255,110,199,0.6),
+                            rgba(255,200,100,0.9)
+                        ) 1`;
+                        lensingRing.style.borderRadius = '50%';
+                        lensingRing.style.borderImage = 'none';
+                        lensingRing.style.borderColor = `rgba(255, 200, 150, ${0.6 * lrOpacity})`;
+                        lensingRing.style.boxShadow = `
+                            0 0 ${15 * lrOpacity}px rgba(255, 200, 150, ${0.5 * lrOpacity}),
+                            0 0 ${30 * lrOpacity}px rgba(255, 110, 199, ${0.3 * lrOpacity}),
+                            inset 0 0 ${15 * lrOpacity}px rgba(255, 200, 150, ${0.2 * lrOpacity})
+                        `;
+                    }
+                }
+
                 // Glow follows sun
-                if (horizonGlow) horizonGlow.style.transform = `translateX(-50%) translateY(${scrolled * 0.25}px)`;
-                // Stars move at different rates for depth
+                if (horizonGlow) horizonGlow.style.transform = `translateX(-50%) translateY(${scrolled * 0.2}px)`;
+                // Stars parallax depth
                 if (starsSmall) starsSmall.style.marginTop = `${scrolled * -0.05}px`;
                 if (starsMedium) starsMedium.style.marginTop = `${scrolled * -0.1}px`;
                 if (starsLarge) starsLarge.style.marginTop = `${scrolled * -0.15}px`;
