@@ -50,7 +50,7 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1;
-    background: radial-gradient(ellipse at 50% 100%, #1a0a2e 0%, #0d0015 40%, #050008 100%);
+    background: radial-gradient(ellipse at 50% 45%, #1a0a2e 0%, #0d0015 50%, #050008 100%);
     overflow: hidden;
 }
 
@@ -66,19 +66,19 @@ body {
 }
 
 .stars-small {
-    animation: starDrift 80s linear infinite;
+    animation: starDrift 120s linear infinite;
 }
 
 .stars-medium {
     width: 3px;
     height: 3px;
-    animation: starDrift 60s linear infinite;
+    animation: starDrift 80s linear infinite;
 }
 
 .stars-large {
     width: 4px;
     height: 4px;
-    animation: starDrift 40s linear infinite;
+    animation: starDrift 50s linear infinite, starTwinkle 4s ease-in-out infinite alternate;
 }
 
 @keyframes starDrift {
@@ -86,27 +86,52 @@ body {
     to { transform: translateY(-2000px); }
 }
 
-/* Retrowave sliced sun */
+@keyframes starTwinkle {
+    0% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+/* Retrowave sliced sun - positioned behind hero text */
 .sun {
     position: absolute;
-    bottom: 28%;
+    top: 30%;
     left: 50%;
-    transform: translateX(-50%);
-    width: 250px;
-    height: 250px;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
     background: linear-gradient(to bottom,
         #ffea00 0%,
-        #ff9500 30%,
-        #ff6ec7 60%,
-        #bd00ff 100%
+        #ffb800 20%,
+        #ff6ec7 50%,
+        #bd00ff 80%,
+        #6b00b3 100%
     );
     border-radius: 50%;
     box-shadow:
         0 0 80px rgba(255, 110, 199, 0.6),
-        0 0 160px rgba(189, 0, 255, 0.3),
-        0 0 240px rgba(255, 110, 199, 0.15);
+        0 0 160px rgba(189, 0, 255, 0.4),
+        0 0 300px rgba(255, 110, 199, 0.2),
+        0 0 500px rgba(189, 0, 255, 0.1);
     will-change: transform;
     overflow: hidden;
+    animation: sunPulse 6s ease-in-out infinite;
+}
+
+@keyframes sunPulse {
+    0%, 100% {
+        box-shadow:
+            0 0 80px rgba(255, 110, 199, 0.6),
+            0 0 160px rgba(189, 0, 255, 0.4),
+            0 0 300px rgba(255, 110, 199, 0.2),
+            0 0 500px rgba(189, 0, 255, 0.1);
+    }
+    50% {
+        box-shadow:
+            0 0 100px rgba(255, 110, 199, 0.7),
+            0 0 200px rgba(189, 0, 255, 0.5),
+            0 0 350px rgba(255, 110, 199, 0.25),
+            0 0 600px rgba(189, 0, 255, 0.15);
+    }
 }
 
 /* Horizontal slices through the sun */
@@ -142,10 +167,29 @@ body {
     height: 18px;
 }
 
-/* Horizon glow - bright neon line at the horizon */
+/* Ambient glow behind the sun */
 .horizon-glow {
     position: absolute;
-    bottom: 28%;
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 300px;
+    background: radial-gradient(ellipse at center, rgba(255, 110, 199, 0.25) 0%, rgba(189, 0, 255, 0.1) 40%, transparent 70%);
+    pointer-events: none;
+    animation: glowPulse 6s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+/* Horizon line */
+.grid-layer::before {
+    content: '';
+    position: absolute;
+    top: 0;
     left: 0;
     width: 100%;
     height: 2px;
@@ -153,26 +197,27 @@ body {
     box-shadow:
         0 0 10px var(--neon-pink),
         0 0 30px var(--neon-pink),
-        0 0 60px var(--neon-purple),
-        0 0 120px rgba(189, 0, 255, 0.5);
+        0 0 80px var(--neon-purple),
+        0 0 150px rgba(189, 0, 255, 0.4);
+    z-index: 1;
 }
 
-/* Perspective grid - improved with glow at horizon */
+/* Perspective grid */
 .grid-layer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 28%;
+    height: 35%;
     background-image:
-        linear-gradient(0deg, transparent 24%, rgba(255, 110, 199, 0.25) 25%, rgba(255, 110, 199, 0.25) 26%, transparent 27%, transparent 74%, rgba(255, 110, 199, 0.25) 75%, rgba(255, 110, 199, 0.25) 76%, transparent 77%, transparent),
-        linear-gradient(90deg, transparent 24%, rgba(255, 110, 199, 0.25) 25%, rgba(255, 110, 199, 0.25) 26%, transparent 27%, transparent 74%, rgba(255, 110, 199, 0.25) 75%, rgba(255, 110, 199, 0.25) 76%, transparent 77%, transparent);
+        linear-gradient(0deg, transparent 24%, rgba(255, 110, 199, 0.2) 25%, rgba(255, 110, 199, 0.2) 26%, transparent 27%, transparent 74%, rgba(255, 110, 199, 0.2) 75%, rgba(255, 110, 199, 0.2) 76%, transparent 77%, transparent),
+        linear-gradient(90deg, transparent 24%, rgba(255, 110, 199, 0.2) 25%, rgba(255, 110, 199, 0.2) 26%, transparent 27%, transparent 74%, rgba(255, 110, 199, 0.2) 75%, rgba(255, 110, 199, 0.2) 76%, transparent 77%, transparent);
     background-size: 60px 40px;
     transform: perspective(400px) rotateX(65deg);
     transform-origin: top center;
     will-change: transform;
-    animation: gridDrift 15s linear infinite;
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 100%);
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 100%);
+    animation: gridDrift 12s linear infinite;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 100%);
 }
 
 @keyframes gridDrift {
@@ -657,7 +702,7 @@ body {
     .projects-grid { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
 
-    .sun { transform: translateX(-50%) !important; }
+    .sun { transform: translate(-50%, -50%) !important; }
 }
 
 @media (max-width: 480px) {
