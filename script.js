@@ -1,4 +1,4 @@
-import { initBlackHole } from './blackhole.js';
+import { initBackground } from './blackhole.js';
 
 // ========================================
 // Static Data
@@ -193,55 +193,12 @@ function initNavHighlight() {
 }
 
 // ========================================
-// Starfield Generator
-// ========================================
-
-function initStarfield() {
-    const starColors = [
-        'rgba(255,255,255,',      // white
-        'rgba(200,220,255,',      // cool blue-white
-        'rgba(255,230,200,',      // warm white
-        'rgba(180,200,255,',      // blue
-        'rgba(255,200,200,',      // pinkish
-    ];
-
-    const layers = [
-        { selector: '.stars-small', count: 700, spread: 2000 },
-        { selector: '.stars-medium', count: 250, spread: 2000 },
-        { selector: '.stars-large', count: 100, spread: 2000 },
-    ];
-
-    layers.forEach(({ selector, count, spread }) => {
-        const el = document.querySelector(selector);
-        if (!el) return;
-        const shadows = [];
-        for (let i = 0; i < count; i++) {
-            const x = Math.floor(Math.random() * spread);
-            const y = Math.floor(Math.random() * spread * 2);
-            const opacity = (Math.random() * 0.5 + 0.5).toFixed(2);
-            const color = starColors[Math.floor(Math.random() * starColors.length)];
-            shadows.push(`${x}px ${y}px ${color}${opacity})`);
-        }
-        el.style.boxShadow = shadows.join(',');
-    });
-}
-
-// ========================================
-// Parallax + Three.js Black Hole
+// Three.js Background + Scroll Control
 // ========================================
 
 function initParallax() {
-    const sun = document.querySelector('.sun');
-    const horizonGlow = document.querySelector('.horizon-glow');
-    const starsSmall = document.querySelector('.stars-small');
-    const starsMedium = document.querySelector('.stars-medium');
-    const starsLarge = document.querySelector('.stars-large');
-    const sunSlices = document.querySelectorAll('.sun-slice');
-    const canvas = document.getElementById('blackholeCanvas');
-    const isMobile = window.innerWidth <= 768;
-
-    // Init Three.js black hole
-    const blackhole = canvas ? initBlackHole(canvas) : null;
+    const canvas = document.getElementById('bgCanvas');
+    const bg = canvas ? initBackground(canvas) : null;
     let ticking = false;
     const heroHeight = window.innerHeight;
 
@@ -251,34 +208,7 @@ function initParallax() {
                 const scrolled = window.scrollY;
                 const bhProgress = Math.min(scrolled / (heroHeight * 0.65), 1);
                 const eased = bhProgress * bhProgress * (3 - 2 * bhProgress);
-
-                // Sun fades out
-                if (sun) {
-                    sun.style.transform = `translate(-50%, -50%) translateY(${isMobile ? 0 : scrolled * 0.25}px)`;
-                    sun.style.opacity = Math.max(0, 1 - eased * 2.5);
-                }
-                sunSlices.forEach(s => { s.style.opacity = Math.max(0, 1 - eased * 3); });
-
-                // Black hole canvas fades in
-                if (canvas && blackhole) {
-                    canvas.style.opacity = Math.min(1, eased * 2);
-                    if (!isMobile) {
-                        canvas.style.transform = `translate(-50%, -50%) translateY(${scrolled * 0.25}px)`;
-                    }
-                    if (eased > 0.05 && !blackhole.isRunning) {
-                        blackhole.start();
-                    } else if (eased <= 0.05 && blackhole.isRunning) {
-                        blackhole.stop();
-                    }
-                }
-
-                // Other parallax
-                if (horizonGlow && !isMobile) horizonGlow.style.transform = `translateX(-50%) translateY(${scrolled * 0.2}px)`;
-                if (!isMobile) {
-                    if (starsSmall) starsSmall.style.marginTop = `${scrolled * -0.05}px`;
-                    if (starsMedium) starsMedium.style.marginTop = `${scrolled * -0.1}px`;
-                    if (starsLarge) starsLarge.style.marginTop = `${scrolled * -0.15}px`;
-                }
+                if (bg) bg.setProgress(eased);
                 ticking = false;
             });
             ticking = true;
@@ -576,7 +506,6 @@ function activateEasterEgg() {
 // ========================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    initStarfield();
     renderProjects();
     renderSkills();
     initScrollReveal();
