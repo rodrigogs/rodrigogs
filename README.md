@@ -4,14 +4,16 @@
 
 [Site](https://rodrigogs.github.io/) · [Em português](https://rodrigogs.github.io/pt/) · [Email](mailto:rodrigo.smscom@gmail.com)
 
-## Unreleased
+## AI engineering
 
 - **[Hermes Agent](https://github.com/NousResearch/hermes-agent/commits?author=rodrigogs)**: Gateway watchdog fixes against false wedge kills, a Bedrock context-window cache fix and an auth cooldown reset fix.
 - **[hermes-smart-router](https://github.com/rodrigogs/hermes-smart-router)**: A Hermes Agent plugin that runs delegated tasks under another profile in an isolated process, with an optional router that picks the profile and model by task difficulty. 1,959 tests, 100% branch coverage.
 - **Claude Code and Hermes bridge**: A two-way MCP bridge that lets Claude Code and Hermes Agent call each other as tool providers across machines, with anti-recursion guards and a shared append-only mailbox. Private.
 - **Trama**: A plugin-first browser workspace for agent runs, drawn as a node graph: panels are nodes, wires are connections. Private.
 
-## Releases
+**What I can do**: Multi-agent orchestration · Agent interoperability · Capability routing · Agent memory and retrieval · Provider-agnostic LLM integration · Local-first AI · Document RAG · Messaging agents
+
+## Selected work
 
 <a href="https://rodrigogs.github.io/#whats-reader"><picture><source media="(prefers-color-scheme: dark)" srcset="https://rodrigogs.github.io/readme/work-whats-reader-dark.svg"><img alt="whats-reader: Read, search and replay WhatsApp chat exports on your own device, with voice notes transcribed locally." src="https://rodrigogs.github.io/readme/work-whats-reader-light.svg" width="49%"></picture></a><a href="https://rodrigogs.github.io/#mysql-events"><picture><source media="(prefers-color-scheme: dark)" srcset="https://rodrigogs.github.io/readme/work-mysql-events-dark.svg"><img alt="mysql-events: React to MySQL inserts, updates and deletes in real time by reading the binlog, with no polling and no database triggers." src="https://rodrigogs.github.io/readme/work-mysql-events-light.svg" width="49%"></picture></a>
 <a href="https://rodrigogs.github.io/#pg-turbo"><picture><source media="(prefers-color-scheme: dark)" srcset="https://rodrigogs.github.io/readme/work-pg-turbo-dark.svg"><img alt="pg-turbo: Dumps and restores large PostgreSQL databases over unreliable links, resuming where a dropped connection left off." src="https://rodrigogs.github.io/readme/work-pg-turbo-light.svg" width="49%"></picture></a><a href="https://rodrigogs.github.io/#vibewatch"><picture><source media="(prefers-color-scheme: dark)" srcset="https://rodrigogs.github.io/readme/work-vibewatch-dark.svg"><img alt="vibewatch: Watches files by glob and runs a different command per event, from one fast cross-platform binary." src="https://rodrigogs.github.io/readme/work-vibewatch-light.svg" width="49%"></picture></a>
@@ -19,11 +21,11 @@
 
 Also live: a **cardiac CT planning workstation** for transcatheter valve procedures (private, live) and **[PitStop](https://pitstop.sh)**, a management SaaS for auto repair shops.
 
-## Upstream
+## Open source
 
-<a href="https://rodrigogs.github.io/#upstream"><picture><source media="(prefers-color-scheme: dark)" srcset="https://rodrigogs.github.io/readme/upstream-dark.svg"><img alt="Upstream contributions: hermes-agent, Rocket.Chat, hermes-webui, moleculer and more." src="https://rodrigogs.github.io/readme/upstream-light.svg"></picture></a>
+<a href="https://rodrigogs.github.io/#upstream"><picture><source media="(prefers-color-scheme: dark)" srcset="https://rodrigogs.github.io/readme/upstream-dark.svg"><img alt="Open source contributions: hermes-agent, Rocket.Chat, hermes-webui, moleculer and more." src="https://rodrigogs.github.io/readme/upstream-light.svg"></picture></a>
 
-## Toolchain
+## Stack
 
 **Ships with**: TypeScript, Node.js, Svelte, SvelteKit, React, Next.js, PostgreSQL, Python, Rust, Electron, AWS and Docker.
 
@@ -34,4 +36,4 @@ Also live: a **cardiac CT planning workstation** for transcatheter valve procedu
 **AI libraries**: Transformers.js on WebGPU · LangChain · LangGraph · OpenAI SDK · Unity ML-Agents<br>
 **Retrieval**: ChromaDB · Docling · OpenWebUI · BM25 + vector hybrid search · Cross-encoder reranking
 
-<sub>Cards refresh daily from GitHub, npm and crates.io. The full release history, including a stack diff between any two years, is at <a href="https://rodrigogs.github.io/">rodrigogs.github.io</a>.</sub>
+<sub>Cards refresh daily from GitHub, npm and crates.io. The full history of the work, including a stack diff between any two years, is at <a href="https://rodrigogs.github.io/">rodrigogs.github.io</a>.</sub>
