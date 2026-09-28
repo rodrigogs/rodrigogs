@@ -23,7 +23,7 @@ Also live: a **cardiac CT planning workstation** for transcatheter valve procedu
 
 ## Open source
 
-<a href="https://rodrigogs.github.io/#upstream"><picture><source media="(prefers-color-scheme: dark)" srcset="https://rodrigogs.github.io/readme/upstream-dark.svg"><img alt="Open source contributions: hermes-agent, Rocket.Chat, hermes-webui, moleculer and more." src="https://rodrigogs.github.io/readme/upstream-light.svg"></picture></a>
+<a href="https://rodrigogs.github.io/#open-source"><picture><source media="(prefers-color-scheme: dark)" srcset="https://rodrigogs.github.io/readme/upstream-dark.svg"><img alt="Open source contributions: hermes-agent, Rocket.Chat, hermes-webui, moleculer and more." src="https://rodrigogs.github.io/readme/upstream-light.svg"></picture></a>
 
 ## Stack
 
