@@ -1,207 +1,37 @@
-<div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=32&duration=2800&pause=2000&color=A277FF&center=true&vCenter=true&width=940&lines=Hey+%F0%9F%91%8B%2C+I'm+Rodrigo!;Full-Stack+Developer+%26+Open+Source+Enthusiast;Cat+Lover+%F0%9F%90%B1+%7C+Coffee+Addict+%E2%98%95;Building+Useful+Things+Since+2015" alt="Typing SVG" />
-</div>
+<a href="https://rodrigogs.github.io/"><picture><source media="(prefers-color-scheme: dark)" srcset="https://rodrigogs.github.io/readme/header-dark.svg"><img alt="Rodrigo Gomes da Silva. Senior software engineer building whole products, from database internals to on‑device AI." src="https://rodrigogs.github.io/readme/header-light.svg"></picture></a>
 
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=rodrigogs&label=Profile%20views&color=blueviolet&style=flat" alt="rodrigogs" />
-  <img src="https://img.shields.io/github/followers/rodrigogs?label=Followers&style=social" alt="GitHub Badge">
-</p>
+**Senior Software Engineer** at Globant on the Disney Entertainment account, shipping software since 2010. Remote from Rio Grande do Sul, Brazil (UTC−3). English and Portuguese.
 
-<p align="center">
-  <a href="https://rodrigogs.github.io/rodrigogs/">
-    <img src="https://img.shields.io/badge/🚀_Interactive_Profile-FF6EC7?style=for-the-badge&logoColor=white" alt="Interactive Profile">
-  </a>
-</p>
+[Site](https://rodrigogs.github.io/) · [Em português](https://rodrigogs.github.io/pt/) · [Email](mailto:rodrigo.smscom@gmail.com)
 
----
+## Unreleased
 
-### 👨‍💻 About Me
+- **[Hermes Agent](https://github.com/NousResearch/hermes-agent/commits?author=rodrigogs)**: Gateway watchdog fixes against false wedge kills, a Bedrock context-window cache fix and an auth cooldown reset fix.
+- **[hermes-smart-router](https://github.com/rodrigogs/hermes-smart-router)**: A Hermes Agent plugin that runs delegated tasks under another profile in an isolated process, with an optional router that picks the profile and model by task difficulty. 1,959 tests, 100% branch coverage.
+- **Claude Code and Hermes bridge**: A two-way MCP bridge that lets Claude Code and Hermes Agent call each other as tool providers across machines, with anti-recursion guards and a shared append-only mailbox. Private.
+- **Trama**: A plugin-first browser workspace for agent runs, drawn as a node graph: panels are nodes, wires are connections. Private.
 
-I'm a passionate **full-stack developer** with over **15 years of experience** building scalable web applications and open-source tools. I love solving complex problems with elegant code and sharing my work with the community.
+## Releases
 
-- 🌱 Exploring **Svelte, TypeScript, and AI integrations**
-- 💬 Ask me about **Node.js, Vue.js, Express, MongoDB, and API development**
-- 🐱 Fun fact: **I love my cats, and that's all!**
-- 📫 How to reach me: **Discord - Rodrigo#9001**
+<a href="https://rodrigogs.github.io/#whats-reader"><picture><source media="(prefers-color-scheme: dark)" srcset="https://rodrigogs.github.io/readme/work-whats-reader-dark.svg"><img alt="whats-reader: Read, search and replay WhatsApp chat exports on your own device, with voice notes transcribed locally." src="https://rodrigogs.github.io/readme/work-whats-reader-light.svg" width="49%"></picture></a><a href="https://rodrigogs.github.io/#mysql-events"><picture><source media="(prefers-color-scheme: dark)" srcset="https://rodrigogs.github.io/readme/work-mysql-events-dark.svg"><img alt="mysql-events: React to MySQL inserts, updates and deletes in real time by reading the binlog, with no polling and no database triggers." src="https://rodrigogs.github.io/readme/work-mysql-events-light.svg" width="49%"></picture></a>
+<a href="https://rodrigogs.github.io/#pg-turbo"><picture><source media="(prefers-color-scheme: dark)" srcset="https://rodrigogs.github.io/readme/work-pg-turbo-dark.svg"><img alt="pg-turbo: Dumps and restores large PostgreSQL databases over unreliable links, resuming where a dropped connection left off." src="https://rodrigogs.github.io/readme/work-pg-turbo-light.svg" width="49%"></picture></a><a href="https://rodrigogs.github.io/#vibewatch"><picture><source media="(prefers-color-scheme: dark)" srcset="https://rodrigogs.github.io/readme/work-vibewatch-dark.svg"><img alt="vibewatch: Watches files by glob and runs a different command per event, from one fast cross-platform binary." src="https://rodrigogs.github.io/readme/work-vibewatch-light.svg" width="49%"></picture></a>
+<a href="https://rodrigogs.github.io/#baileys-store"><picture><source media="(prefers-color-scheme: dark)" srcset="https://rodrigogs.github.io/readme/work-baileys-store-dark.svg"><img alt="baileys-store: Keeps WhatsApp bot auth sessions in Redis, Postgres or any Keyv backend, plus an in-memory chat store, so bots survive restarts." src="https://rodrigogs.github.io/readme/work-baileys-store-light.svg" width="49%"></picture></a><a href="https://rodrigogs.github.io/#easyvpn"><picture><source media="(prefers-color-scheme: dark)" srcset="https://rodrigogs.github.io/readme/work-easyvpn-dark.svg"><img alt="easyvpn: Connects to a free VPN server in the country you pick with one command, on Windows, macOS or Linux." src="https://rodrigogs.github.io/readme/work-easyvpn-light.svg" width="49%"></picture></a>
 
----
+Also live: a **cardiac CT planning workstation** for transcatheter valve procedures (private, live) and **[PitStop](https://pitstop.sh)**, a management SaaS for auto repair shops.
 
-### 🚀 Featured Projects
+## Upstream
 
-<table>
-<tr>
-<td width="50%">
-<h3 align="center">EasyVPN</h3>
-<div align="center">
-<p><strong>⭐ 516 stars</strong></p>
-<p>Easily connect to a VPN in a country of your choice</p>
-<p>
-<a href="https://github.com/rodrigogs/easyvpn"><img src="https://img.shields.io/badge/-Repo-000?style=flat&logo=github&logoColor=white"></a>
-</p>
-</div>
-</td>
-<td width="50%">
-<h3 align="center">WhatsApp Backup Reader</h3>
-<div align="center">
-<p><strong>⭐ 22 stars</strong></p>
-<p>Desktop/web app to visualize WhatsApp chat exports</p>
-<p>
-<a href="https://github.com/rodrigogs/whats-reader"><img src="https://img.shields.io/badge/-Repo-000?style=flat&logo=github&logoColor=white"></a>
-<a href="https://rodrigogs.github.io/whats-reader/"><img src="https://img.shields.io/badge/-Demo-5B21B6?style=flat&logo=vercel&logoColor=white"></a>
-</p>
-</div>
-</td>
-</tr>
-<tr>
-<td width="50%">
-<h3 align="center">Kairos</h3>
-<div align="center">
-<p><strong>⭐ 98 stars</strong></p>
-<p>A non date-based time calculator</p>
-<p>
-<a href="https://github.com/rodrigogs/kairos"><img src="https://img.shields.io/badge/-Repo-000?style=flat&logo=github&logoColor=white"></a>
-<a href="http://rodrigogs.github.io/kairos/"><img src="https://img.shields.io/badge/-Demo-5B21B6?style=flat&logo=vercel&logoColor=white"></a>
-</p>
-</div>
-</td>
-<td width="50%">
-<h3 align="center">Node.js Web Scaffold</h3>
-<div align="center">
-<p><strong>⭐ 167 stars</strong></p>
-<p>Complete web app scaffold with Node.js & Express</p>
-<p>
-<a href="https://github.com/rodrigogs/nodejs-web-jade-scaffold"><img src="https://img.shields.io/badge/-Repo-000?style=flat&logo=github&logoColor=white"></a>
-</p>
-</div>
-</td>
-</tr>
-</table>
+<a href="https://rodrigogs.github.io/#upstream"><picture><source media="(prefers-color-scheme: dark)" srcset="https://rodrigogs.github.io/readme/upstream-dark.svg"><img alt="Upstream contributions: hermes-agent, Rocket.Chat, hermes-webui, moleculer and more." src="https://rodrigogs.github.io/readme/upstream-light.svg"></picture></a>
 
----
+## Toolchain
 
-### 🛠️ Tech Stack
+**Ships with**: TypeScript, Node.js, Svelte, SvelteKit, React, Next.js, PostgreSQL, Python, Rust, Electron, AWS and Docker.
 
-#### **Languages**
-![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
-![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
-![Python](https://img.shields.io/badge/-Python-3776AB?style=flat&logo=python&logoColor=white)
-![Java](https://img.shields.io/badge/-Java-007396?style=flat&logo=java&logoColor=white)
-![Kotlin](https://img.shields.io/badge/-Kotlin-0095D5?style=flat&logo=kotlin&logoColor=white)
-![Rust](https://img.shields.io/badge/-Rust-000000?style=flat&logo=rust&logoColor=white)
-![C#](https://img.shields.io/badge/-C%23-239120?style=flat&logo=c-sharp&logoColor=white)
-![Bash](https://img.shields.io/badge/-Bash-4EAA25?style=flat&logo=gnu-bash&logoColor=white)
+**Agents**: Claude Code · Hermes Agent (self-hosted) · Subagent workflows<br>
+**Models**: Claude on AWS Bedrock · OpenAI GPT and Whisper · DeepSeek · Z.ai GLM · Ollama · LM Studio · llama.cpp<br>
+**MCP servers**: Playwright · Chrome DevTools · GitHub · SearXNG (self-hosted) · Context7 · Peekaboo · Godot<br>
+**Memory and skills**: claude-mem · superpowers · impeccable<br>
+**AI libraries**: Transformers.js on WebGPU · LangChain · LangGraph · OpenAI SDK · Unity ML-Agents<br>
+**Retrieval**: ChromaDB · Docling · OpenWebUI · BM25 + vector hybrid search · Cross-encoder reranking
 
-#### **Frontend**
-![React](https://img.shields.io/badge/-React-61DAFB?style=flat&logo=react&logoColor=black)
-![Next.js](https://img.shields.io/badge/-Next.js-000000?style=flat&logo=next.js&logoColor=white)
-![Vue.js](https://img.shields.io/badge/-Vue.js-4FC08D?style=flat&logo=vue.js&logoColor=white)
-![Svelte](https://img.shields.io/badge/-Svelte-FF3E00?style=flat&logo=svelte&logoColor=white)
-![Angular](https://img.shields.io/badge/-Angular-DD0031?style=flat&logo=angular&logoColor=white)
-![Nuxt.js](https://img.shields.io/badge/-Nuxt.js-00DC82?style=flat&logo=nuxt.js&logoColor=white)
-![Vuetify](https://img.shields.io/badge/-Vuetify-1867C0?style=flat&logo=vuetify&logoColor=white)
-![Bootstrap](https://img.shields.io/badge/-Bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white)
-![Ionic](https://img.shields.io/badge/-Ionic-3880FF?style=flat&logo=ionic&logoColor=white)
-![Electron](https://img.shields.io/badge/-Electron-47848F?style=flat&logo=electron&logoColor=white)
-
-#### **Backend**
-![Node.js](https://img.shields.io/badge/-Node.js-339933?style=flat&logo=node.js&logoColor=white)
-![Express](https://img.shields.io/badge/-Express-000000?style=flat&logo=express&logoColor=white)
-![Fastify](https://img.shields.io/badge/-Fastify-000000?style=flat&logo=fastify&logoColor=white)
-![Spring](https://img.shields.io/badge/-Spring-6DB33F?style=flat&logo=spring&logoColor=white)
-![.NET](https://img.shields.io/badge/-.NET-512BD4?style=flat&logo=dotnet&logoColor=white)
-![Struts](https://img.shields.io/badge/-Struts-B31B1B?style=flat&logo=apache&logoColor=white)
-![Grails](https://img.shields.io/badge/-Grails-63B132?style=flat&logo=apache-groovy&logoColor=white)
-![Koin](https://img.shields.io/badge/-Koin-FF9800?style=flat&logo=kotlin&logoColor=white)
-![Ktor](https://img.shields.io/badge/-Ktor-087CFA?style=flat&logo=kotlin&logoColor=white)
-
-#### **Databases**
-![MongoDB](https://img.shields.io/badge/-MongoDB-47A248?style=flat&logo=mongodb&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-336791?style=flat&logo=postgresql&logoColor=white)
-![MySQL](https://img.shields.io/badge/-MySQL-4479A1?style=flat&logo=mysql&logoColor=white)
-![Redis](https://img.shields.io/badge/-Redis-DC382D?style=flat&logo=redis&logoColor=white)
-![Elasticsearch](https://img.shields.io/badge/-Elasticsearch-005571?style=flat&logo=elasticsearch&logoColor=white)
-![SQLite](https://img.shields.io/badge/-SQLite-003B57?style=flat&logo=sqlite&logoColor=white)
-![Oracle](https://img.shields.io/badge/-Oracle-F80000?style=flat&logo=oracle&logoColor=white)
-![MS SQL Server](https://img.shields.io/badge/-MS%20SQL%20Server-CC2927?style=flat&logo=microsoft-sql-server&logoColor=white)
-![DynamoDB](https://img.shields.io/badge/-DynamoDB-4053D6?style=flat&logo=amazon-dynamodb&logoColor=white)
-
-#### **DevOps & Cloud**
-![Docker](https://img.shields.io/badge/-Docker-2496ED?style=flat&logo=docker&logoColor=white)
-![Kubernetes](https://img.shields.io/badge/-Kubernetes-326CE5?style=flat&logo=kubernetes&logoColor=white)
-![AWS](https://img.shields.io/badge/-AWS-232F3E?style=flat&logo=amazon-aws&logoColor=white)
-![GCP](https://img.shields.io/badge/-GCP-4285F4?style=flat&logo=google-cloud&logoColor=white)
-![Firebase](https://img.shields.io/badge/-Firebase-FFCA28?style=flat&logo=firebase&logoColor=black)
-![Heroku](https://img.shields.io/badge/-Heroku-430098?style=flat&logo=heroku&logoColor=white)
-![Linux](https://img.shields.io/badge/-Linux-FCC624?style=flat&logo=linux&logoColor=black)
-![Git](https://img.shields.io/badge/-Git-F05032?style=flat&logo=git&logoColor=white)
-
-#### **Testing & CI/CD**
-![Jest](https://img.shields.io/badge/-Jest-C21325?style=flat&logo=jest&logoColor=white)
-![Vitest](https://img.shields.io/badge/-Vitest-6E9F18?style=flat&logo=vitest&logoColor=white)
-![Cypress](https://img.shields.io/badge/-Cypress-17202C?style=flat&logo=cypress&logoColor=white)
-![Playwright](https://img.shields.io/badge/-Playwright-2EAD33?style=flat&logo=playwright&logoColor=white)
-![Mocha](https://img.shields.io/badge/-Mocha-8D6748?style=flat&logo=mocha&logoColor=white)
-![Jasmine](https://img.shields.io/badge/-Jasmine-8A4182?style=flat&logo=jasmine&logoColor=white)
-![Jenkins](https://img.shields.io/badge/-Jenkins-D24939?style=flat&logo=jenkins&logoColor=white)
-![CircleCI](https://img.shields.io/badge/-CircleCI-343434?style=flat&logo=circleci&logoColor=white)
-![Travis CI](https://img.shields.io/badge/-Travis%20CI-3EAAAF?style=flat&logo=travis-ci&logoColor=white)
-
-#### **AI & Machine Learning**
-![LangChain](https://img.shields.io/badge/-LangChain-121212?style=flat&logo=chainlink&logoColor=white)
-![LangGraph](https://img.shields.io/badge/-LangGraph-FF6B6B?style=flat&logo=graphql&logoColor=white)
-![OpenAI](https://img.shields.io/badge/-OpenAI-412991?style=flat&logo=openai&logoColor=white)
-![Anthropic](https://img.shields.io/badge/-Anthropic-181818?style=flat&logo=anthropic&logoColor=white)
-![TensorFlow](https://img.shields.io/badge/-TensorFlow-FF6F00?style=flat&logo=tensorflow&logoColor=white)
-![OpenWebUI](https://img.shields.io/badge/-OpenWebUI-7C3AED?style=flat&logo=openai&logoColor=white)
-![n8n](https://img.shields.io/badge/-n8n-EA4B71?style=flat&logo=n8n&logoColor=white)
-![MCP](https://img.shields.io/badge/-MCP-000000?style=flat&logo=protocol&logoColor=white)
-
-#### **Other Tools & Technologies**
-![Kafka](https://img.shields.io/badge/-Kafka-231F20?style=flat&logo=apache-kafka&logoColor=white)
-![Hadoop](https://img.shields.io/badge/-Hadoop-66CCFF?style=flat&logo=apache-hadoop&logoColor=black)
-![Puppeteer](https://img.shields.io/badge/-Puppeteer-40B5A4?style=flat&logo=puppeteer&logoColor=white)
-![Pug](https://img.shields.io/badge/-Pug-A86454?style=flat&logo=pug&logoColor=white)
-![Unity](https://img.shields.io/badge/-Unity-000000?style=flat&logo=unity&logoColor=white)
-![Android](https://img.shields.io/badge/-Android-3DDC84?style=flat&logo=android&logoColor=white)
-![Arduino](https://img.shields.io/badge/-Arduino-00979D?style=flat&logo=arduino&logoColor=white)
-![Baileys](https://img.shields.io/badge/-Baileys-25D366?style=flat&logo=whatsapp&logoColor=white)
-
----
-
-### 📊 GitHub Stats
-
-<div align="center">
-  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=rodrigogs&show_icons=true&theme=dracula&include_all_commits=true&count_private=true&hide_border=false&bg_color=0D1117&title_color=BD00FF&icon_color=FF6EC7&text_color=00D9FF&cache_seconds=1800" alt="GitHub Stats"/>
-  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=rodrigogs&layout=compact&langs_count=8&theme=dracula&hide_border=false&bg_color=0D1117&title_color=BD00FF&text_color=00D9FF&cache_seconds=1800" alt="Top Languages"/>
-</div>
-
-<div align="center">
-  <img src="https://streak-stats.demolab.com/?user=rodrigogs&theme=dracula&hide_border=false&background=0D1117&ring=BD00FF&fire=FF6EC7&currStreakLabel=00D9FF" alt="GitHub Streak" />
-</div>
-
----
-
-### 📈 Contribution Graph
-
-<div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=rodrigogs&theme=dracula&hide_border=false&bg_color=0D1117&color=00D9FF&line=BD00FF&point=FF6EC7" alt="Contribution Graph"/>
-</div>
-
----
-
-### 🤝 Connect With Me
-
-<div align="center">
-  
-[![GitHub](https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/rodrigogs)
-[![Email](https://img.shields.io/badge/-Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:rodrigo.smscom@gmail.com)
-
-**Discord:** Rodrigo#9001
-
-</div>
-
----
-
-<div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=footer"/>
-</div>
+<sub>Cards refresh daily from GitHub, npm and crates.io. The full release history, including a stack diff between any two years, is at <a href="https://rodrigogs.github.io/">rodrigogs.github.io</a>.</sub>
