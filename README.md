@@ -6,8 +6,8 @@ AI is part of how I work every day. I plan, build and review with Claude Code an
 
 Remote from Rio Grande do Sul, Brazil (UTC−3) · [Site](https://rodrigogs.github.io/) · [Em português](https://rodrigogs.github.io/pt/) · [LinkedIn](https://www.linkedin.com/in/rodrigogomesdasilva/) · [Email](mailto:rodrigo.smscom@gmail.com)
 
-<a href="https://rodrigogs.github.io/"><img alt="1,721 GitHub stars, 21,863 downloads / 30 days, 6,763 contributions / year, 212 followers, 214 releases shipped. Shipping software since 2010." src="https://rodrigogs.github.io/readme/hud.svg" width="100%"></a>
-<a href="https://github.com/rodrigogs"><img alt="Contributions over the last 53 weeks, drawn as a skyline: 6,763 in total." src="https://rodrigogs.github.io/readme/skyline.svg" width="100%"></a>
+<a href="https://rodrigogs.github.io/"><img alt="1,721 GitHub stars, 23,067 downloads / 30 days, 7,054 contributions / year, 212 followers, 214 releases shipped. Shipping software since 2010." src="https://rodrigogs.github.io/readme/hud.svg" width="100%"></a>
+<a href="https://github.com/rodrigogs"><img alt="Contributions over the last 53 weeks, drawn as a skyline: 7,054 in total." src="https://rodrigogs.github.io/readme/skyline.svg" width="100%"></a>
 
 ## Selected work
 
@@ -17,7 +17,7 @@ Remote from Rio Grande do Sul, Brazil (UTC−3) · [Site](https://rodrigogs.gith
 
 Also: [kairos](https://github.com/rodrigogs/kairos), a time calculator without dates · [barracao-digital](https://github.com/rodrigogs/barracao-digital), a virtual queue for COVID-19 screening tents (2020) · [mongoose-timezone](https://github.com/rodrigogs/mongoose-timezone), a Mongoose plugin that normalizes stored dates · [hermes-smart-router](https://github.com/rodrigogs/hermes-smart-router), task routing for an open source AI agent.
 
-Open source: [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) ([5 commits upstream](https://github.com/NousResearch/hermes-agent/commits?author=rodrigogs)) · [nesquena/hermes-webui](https://github.com/nesquena/hermes-webui) ([5 merged PRs](https://github.com/nesquena/hermes-webui/pulls?q=is%3Apr+author%3Arodrigogs)) · [RocketChat/Rocket.Chat](https://github.com/RocketChat/Rocket.Chat) ([1 merged PR](https://github.com/RocketChat/Rocket.Chat/pulls?q=is%3Apr+author%3Arodrigogs)) · [moleculerjs/moleculer](https://github.com/moleculerjs/moleculer) ([1 merged PR](https://github.com/moleculerjs/moleculer/pulls?q=is%3Apr+author%3Arodrigogs)) · [ACloudGuru/serverless-plugin-aws-alerts](https://github.com/ACloudGuru/serverless-plugin-aws-alerts) ([1 merged PR](https://github.com/ACloudGuru/serverless-plugin-aws-alerts/pulls?q=is%3Apr+author%3Arodrigogs)) · [friedrith/node-wifi](https://github.com/friedrith/node-wifi) ([1 merged PR](https://github.com/friedrith/node-wifi/pulls?q=is%3Apr+author%3Arodrigogs)).
+Open source: [nesquena/hermes-webui](https://github.com/nesquena/hermes-webui) ([5 merged PRs](https://github.com/nesquena/hermes-webui/pulls?q=is%3Apr+author%3Arodrigogs)) · [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) ([1 commit upstream](https://github.com/NousResearch/hermes-agent/commits?author=rodrigogs)) · [RocketChat/Rocket.Chat](https://github.com/RocketChat/Rocket.Chat) ([1 merged PR](https://github.com/RocketChat/Rocket.Chat/pulls?q=is%3Apr+author%3Arodrigogs)) · [moleculerjs/moleculer](https://github.com/moleculerjs/moleculer) ([1 merged PR](https://github.com/moleculerjs/moleculer/pulls?q=is%3Apr+author%3Arodrigogs)) · [ACloudGuru/serverless-plugin-aws-alerts](https://github.com/ACloudGuru/serverless-plugin-aws-alerts) ([1 merged PR](https://github.com/ACloudGuru/serverless-plugin-aws-alerts/pulls?q=is%3Apr+author%3Arodrigogs)) · [friedrith/node-wifi](https://github.com/friedrith/node-wifi) ([1 merged PR](https://github.com/friedrith/node-wifi/pulls?q=is%3Apr+author%3Arodrigogs)).
 
 ## Stack
 
