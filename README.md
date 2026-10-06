@@ -6,8 +6,8 @@ AI is part of how I work every day. I plan, build and review with Claude Code an
 
 Remote from Rio Grande do Sul, Brazil (UTC−3) · [Site](https://rodrigogs.github.io/) · [Em português](https://rodrigogs.github.io/pt/) · [LinkedIn](https://www.linkedin.com/in/rodrigogomesdasilva/) · [Email](mailto:rodrigo.smscom@gmail.com)
 
-<a href="https://rodrigogs.github.io/"><img alt="1,724 GitHub stars, 24,813 downloads / 30 days, 7,232 contributions / year, 213 followers, 214 releases shipped. Shipping software since 2010." src="https://rodrigogs.github.io/readme/hud.svg" width="100%"></a>
-<a href="https://github.com/rodrigogs"><img alt="Contributions over the last 53 weeks, drawn as a skyline: 7,232 in total." src="https://rodrigogs.github.io/readme/skyline.svg" width="100%"></a>
+<a href="https://rodrigogs.github.io/"><img alt="1,724 GitHub stars, 25,171 downloads / 30 days, 7,528 contributions / year, 213 followers, 214 releases shipped. Shipping software since 2010." src="https://rodrigogs.github.io/readme/hud.svg" width="100%"></a>
+<a href="https://github.com/rodrigogs"><img alt="Contributions over the last 53 weeks, drawn as a skyline: 7,528 in total." src="https://rodrigogs.github.io/readme/skyline.svg" width="100%"></a>
 
 ## Selected work
 
